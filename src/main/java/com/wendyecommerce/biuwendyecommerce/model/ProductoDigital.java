@@ -1,10 +1,7 @@
 package com.wendyecommerce.biuwendyecommerce.model;
-
 public class ProductoDigital extends Producto {
-
     private String formatoArchivo;
     private double tamanoArchivo;
-    
 
     public ProductoDigital() {
         super();

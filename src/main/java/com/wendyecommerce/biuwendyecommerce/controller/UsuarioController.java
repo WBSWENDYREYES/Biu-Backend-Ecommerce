@@ -5,19 +5,23 @@
 package com.wendyecommerce.biuwendyecommerce.controller;
 
 import com.wendyecommerce.biuwendyecommerce.model.UsuarioCliente;
+import com.wendyecommerce.biuwendyecommerce.model.Categoria;
 import com.wendyecommerce.biuwendyecommerce.model.Roles;
 import com.wendyecommerce.biuwendyecommerce.model.Usuario;
 import com.wendyecommerce.biuwendyecommerce.repository.RolesRepository;
 import com.wendyecommerce.biuwendyecommerce.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@CrossOrigin(origins = "*") // Permite la comunicación limpia con tu Frontend
 public class UsuarioController {
 
     @Autowired
@@ -51,11 +55,36 @@ public class UsuarioController {
       
 
         }
+     // 📋 B. LISTAR USUARIOS (GET)
 
-    // 📋 B. LISTAR USUARIOS (GET)
-    @GetMapping
-    public List<Usuario> listar() {
-        return usuarioService.listarTodos();
+@PostMapping("/listaUsuarios")
+    public ResponseEntity<?> listaUsuarios(@RequestBody Map<String, Object> request) {
+        System.out.println("--> ¡LLEGÓ PETICIÓN POST PARA LISTAR USUARIO! <--");
+
+        if (!request.containsKey("usuarioId") || request.get("usuarioId") == null) {
+            return new ResponseEntity<>("Falta el ID de usuario", HttpStatus.BAD_REQUEST);
+        }
+
+        // Convertimos el ID de forma segura sin importar si viene como String o Integer en el JSON
+        int usuarioId = Integer.parseInt(request.get("usuarioId").toString());
+
+        // Buscamos el usuario en tu base de datos
+        Optional<Usuario> usuarioOpt = usuarioService.buscarPorId(usuarioId); 
+
+        if (usuarioOpt.isEmpty()) {
+            return new ResponseEntity<>("Usuario no encontrado en el sistema", HttpStatus.UNAUTHORIZED);
+        }
+
+        Usuario usuarioActual = usuarioOpt.get();
+
+        // 🚨 VERIFICACIÓN CLAVE DE TAREA: Evaluamos si el rol es nulo o si no es Administrador (ID != 1)
+        if (usuarioActual.getRol() == null || usuarioActual.getRol().getIdroles() != 1) {
+            System.out.println("--> [DENEGADO]: El usuario con ID " + usuarioId + " NO es Administrador.");
+            return new ResponseEntity<>("Acceso denegado: Requiere rol de Administrador", HttpStatus.FORBIDDEN);
+        }
+        
+        return new ResponseEntity<>(usuarioService.listarTodos(), HttpStatus.CREATED);
+
     }
 
     // ➕ C. CREAR USUARIO - Especializado en Cliente (POST)

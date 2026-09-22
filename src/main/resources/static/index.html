@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <!--begin::Head-->
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title> SOFTWENDY | Dashboard</title>
+
+    <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
+    <script>
+      (() => {
+        'use strict';
+        const root = document.documentElement;
+        if (root.getAttribute('data-lte-color-mode') === 'off') {
+          return;
+        }
+        const STORAGE_KEY = 'lte-theme';
+        let stored = null;
+        try {
+          stored = localStorage.getItem(STORAGE_KEY);
+        } catch {}
+        const authored = root.getAttribute('data-bs-theme');
+        let resolved = 'light';
+        if (stored === 'dark' || stored === 'light') {
+          resolved = stored;
+        } else if (authored === 'dark' || authored === 'light') {
+          resolved = authored;
+        } else if (globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
+          resolved = 'dark';
+        }
+        root.setAttribute('data-bs-theme', resolved);
+        root.style.colorScheme = resolved;
+        if (resolved !== authored) {
+          root.setAttribute('data-lte-theme-resolved', '');
+        }
+      })();
+    </script>
+    <!--end::Theme Init-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+
+    <meta name="title" content="SOFTWENDY | Dashboard" />
+    <meta name="author" content="ColorlibHQ" />
+    <meta name="description" content="AdminLTE is a free Bootstrap 5 admin dashboard." />
+    
+    <link rel="preload" href="./css/adminlte.css" as="style" />
+
+    <!--begin::Fonts-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">    <!--end::Fonts-->
+
+    <!--begin::Third Party Plugins-->
+
+    <!--end::Third Party Plugins-->
+
+    <!--begin::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="./css/adminlte.css" />
+    <!--end::Required Plugin(AdminLTE)-->
+
+ <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+      integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
+      crossorigin="anonymous"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <!--end::Fonts-->
+
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+
+    <!--begin::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="./css/adminlte.css" />
+    <!--end::Required Plugin(AdminLTE)-->
+
+    <!-- apexcharts -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css"
+      integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
+      crossorigin="anonymous"
+    />
+
+    <!-- jsvectormap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
+      integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
+      crossorigin="anonymous"
+    />   
+
+  </head>
+  <!--end::Head-->
+  
+  <!--begin::Body-->
+  <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    <!--begin::App Wrapper-->
+    <div class="app-wrapper">
+      
+      <!--begin::Header-->
+      <nav class="app-header navbar navbar-expand bg-body">
+        <div class="container-fluid">
+          <!--begin::Start Navbar Links-->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" aria-label="Toggle sidebar">
+                <i class="bi bi-list"></i>
+              </a>
+            </li>
+            <li class="nav-item d-none d-md-block">
+              <a href="./index.html" class="nav-link"><i class="bi bi-grid-1x2 me-1"></i> Panel Principal</a>
+            </li>
+          </ul>
+          <!--end::Start Navbar Links-->
+
+          <!--begin::End Navbar Links-->
+<li class="nav-item dropdown user-menu shadow-sm">
+  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center py-1" data-bs-toggle="dropdown" aria-expanded="false">
+    <!-- Avatar miniatura en la barra -->
+    <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center me-2 border border-primary border-opacity-25" style="width: 34px; height: 34px;">
+      <i class="bi bi-person text-primary fs-5"></i>
+    </div>
+    <span class="d-none d-md-inline fw-semibold text-secondary" id="user-nav-name">Cargando...</span>
+  </a>
+  
+  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg border-0 shadow-lg p-3 rounded-4 mt-2" style="width: 280px;">
+    <!-- Tarjeta informativa del usuario -->
+    <li class="d-flex align-items-center pb-3 mb-3 border-bottom border-light">
+      <div class="rounded-circle bg-primary bg-opacity-10 d-flex align-items-center justify-content-center border border-primary border-opacity-25 me-3" style="width: 54px; height: 54px;">
+        <i class="bi bi-person-check text-primary fs-3"></i>
+      </div>
+      <div class="overflow-hidden">
+        <h6 class="mb-0 fw-bold text-dark text-truncate" id="user-header-display">Cargando...</h6>
+        <span class="badge bg-light text-primary border border-primary border-opacity-10 fw-medium px-2.5 py-1 rounded-pill mt-1" style="font-size: 0.75rem;" id="user-role-display">Usuario</span>
+      </div>
+    </li>
+    
+    <!-- Botones de Acción Internos -->
+    <li class="d-grid gap-2">
+      <button type="button" class="btn btn-light btn-sm text-start py-2 px-3 rounded-3 d-flex align-items-center" id="btn-ir-perfil">
+        <i class="bi bi-person-gear text-secondary me-2.5 fs-5"></i>
+        <span class="text-secondary fw-medium">Mi Perfil</span>
+      </button>
+      
+      <button type="button" class="btn btn-outline-danger btn-sm text-start py-2 px-3 rounded-3 d-flex align-items-center mt-1 border-opacity-25" id="btn-cerrar-sesion">
+        <i class="bi bi-box-arrow-right me-2.5 fs-5"></i>
+        <span class="fw-medium">Cerrar Sesión</span>
+      </button>
+    </li>
+  </ul>
+</li>
+
+          <!--end::End Navbar Links-->
+        </div>
+      </nav>
+      <!--end::Header-->
+
+      <!--begin::Sidebar-->
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <!--begin::Sidebar Brand-->
+        <div class="sidebar-brand">
+          <!--begin::Brand Link-->
+          <a href="./index.html" class="brand-link">
+            <!--begin::Brand Image-->
+            <img
+              src="./assets/img/AdminLTELogo.png"
+              alt="SOFTWENDY Logo"
+              class="brand-image opacity-75 shadow"
+            />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">SOFTWENDY</span>
+            <!--end::Brand Text-->
+          </a>
+          <!--end::Brand Link-->
+        </div>
+        <!--end::Sidebar Brand-->
+        <!--begin::Sidebar Wrapper-->
+        <div class="sidebar-wrapper">
+          <nav class="mt-2" aria-label="Main navigation">
+            <!--begin::Sidebar Menu-->
+            <ul
+              class="nav sidebar-menu flex-column"
+              data-lte-toggle="treeview"
+              data-accordion="false"
+              id="navigation"
+            >
+              <li class="nav-item menu-open">
+                <a href="#" class="nav-link active">
+                  <i class="nav-icon bi bi-speedometer"></i>
+                  <p>
+                    INICIO
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="./index.html" class="nav-link active">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>TIENDAS</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="./index2.html" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>POPULARES</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="./index3.html" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>CONTACTOS v3</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam-fill"></i>
+                  <p>
+                    ADMINISTRATIVOS
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+     <li class="nav-item" id="nav-productos">
+                <a href="javascript:void(0);" onclick="cargarModulo('productos/producto.html')" class="nav-link">
+                  <i class="nav-icon bi bi-box"></i>
+                  <p>Productos</p>
+                </a>
+              </li>
+                  <li class="nav-item">
+                <a href="javascript:void(0);" onclick="cargarModulo('categorias/categoria.html')" class="nav-link">
+                  <i class="nav-icon bi bi-box"></i>
+                      <p>Marcas</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+           <a href="javascript:void(0);" onclick="cargarModulo('categorias/categoria.html')" class="nav-link">
+                  <i class="nav-icon bi bi-box"></i>
+             <p>Categorias</p>
+                    </a>
+                  </li>
+
+<li class="nav-item">
+           <a href="javascript:void(0);" onclick="cargarModulo('usuarios/usuario.html')" class="nav-link">
+                  <i class="nav-icon bi bi-box"></i>
+             <p>Usuarios</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+                  
+                </ul>
+              </li>
+            </ul>
+            <!--end::Sidebar Menu-->
+
+            <!-- Docs CTA (bottom of sidebar) -->
+            <div class="p-3 mt-3 border-top border-secondary border-opacity-25">
+              <a
+                href="./docs/introduction.html"
+                class="btn btn-sm btn-outline-light w-100 d-flex align-items-center justify-content-center gap-2"
+              >
+                <i class="bi bi-book" aria-hidden="true"></i>
+                Ver documentación 
+              </a>
+            </div>
+          </nav>
+        </div>
+        <!--end::Sidebar Wrapper-->
+      </aside>
+      <!--end::Sidebar-->
+
+      <!--begin::Contenedor Principal Dinámico-->
+<main class="app-main" style="padding: 0; overflow: hidden; height: calc(100vh - 56px);">
+  <iframe 
+    id="iframe-principal" 
+    src="" 
+    style="width: 100%; height: 100%; border: none; display: none;">
+  </iframe>
+  
+  <!-- Contenido inicial que se ve antes de hacer clic en el menú -->
+  <div id="dashboard-inicio" class="p-4">
+    <h4>¡Bienvenido al sistema de administración!</h4>
+    <p>Selecciona una opción del menú lateral para comenzar a operar.</p>
+  </div>
+</main>
+      <!--end::Contenedor Principal Dinámico-->
+
+    </div>
+    <!--end::App Wrapper-->
+
+    <!--begin::Scripts del Sistema (Carga Dinámica y Control de Roles)-->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          // 1. Obtener datos del usuario guardados en localStorage
+          const nombre = localStorage.getItem('usuarioNombre');
+          const rolId = localStorage.getItem('usuarioRol');
+
+          // 2. Pintar datos del usuario en la barra y encabezado
+          if (nombre) {
+              document.getElementById('user-nav-name').textContent = nombre;
+              document.getElementById('user-header-display').textContent = nombre;
+              if(document.getElementById('welcome-name')) {
+                  document.getElementById('welcome-name').textContent = nombre;
+              }
+          } else {
+
+                        localStorage.removeItem('usuarioId');
+     localStorage.removeItem('usuarioRol');
+     localStorage.removeItem('usuarioNombre');        
+
+        window.location.href = '/login.html'; 
+          }
+
+          if (rolId) {
+              let rolTexto = "Cliente";
+              if (rolId === "1") rolTexto = "Administrador";
+              document.getElementById('user-role-display').textContent = rolTexto;
+
+              // 3. SEGURIDAD VISUAL: Ocultar módulos si el usuario es Rol 2 (Cliente)
+              if (rolId === "2") {
+                  const itemMarcas = document.getElementById('nav-marcas');
+                  if (itemMarcas) itemMarcas.style.display = 'none';
+                  
+                  const itemProductos = document.getElementById('nav-productos');
+                  if (itemProductos) itemProductos.style.display = 'none';
+              }
+          }
+      });
+
+      // 4. FUNCIÓN PARA INYECTAR LAS PÁGINAS DENTRO DEL CONTENEDOR PRINCIPAL
+      function cargarModulo(ruta) {
+       localStorage.setItem('modulo-activo', ruta);  
+    const iframe = document.getElementById('iframe-principal');
+    const dashboardInicio = document.getElementById('dashboard-inicio');
+    
+    if (dashboardInicio) dashboardInicio.style.display = 'none';
+    
+    // Mostramos el iframe y cambiamos su dirección URL
+    iframe.style.display = 'block';
+    
+    // Recuperamos los datos del usuario para pasarlos por URL si el módulo los necesita
+    const id = localStorage.getItem('usuarioId');
+    const rol = localStorage.getItem('usuarioRol');
+    const nombre = encodeURIComponent(localStorage.getItem('usuarioNombre') || '');
+
+    // Cargamos la página pasando los parámetros directamente
+    iframe.src = `/paginas/${ruta}?id=${id}&rol=${rol}&nombre=${nombre}`;
+}
+    </script>
+    <!--end::Scripts del Sistema-->
+
+        <script
+      src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+    <script src="./js/adminlte.js"></script>
+    <!--end::Required Plugin(AdminLTE)-->
+    <!--begin::OverlayScrollbars Configure-->
+    <script>
+      const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+      const Default = {
+        scrollbarTheme: 'os-theme-light',
+        scrollbarAutoHide: 'leave',
+        scrollbarClickScroll: true,
+      };
+      document.addEventListener('DOMContentLoaded', function () {
+
+// 1. Redirección estética al Perfil del Usuario
+document.getElementById('btn-ir-perfil').addEventListener('click', () => {
+    // Redirige al template de tu perfil
+    window.location.href = '/perfil'; 
+});
+
+// 2. Función para Cerrar Sesión y limpiar credenciales
+document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
+    
+    // Si usas JWT Tokens, limpiamos el almacenamiento del navegador
+    if (localStorage.getItem('token')) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_data'); // Limpia si guardabas datos de apoyo
+        
+        alert("Sesión finalizada correctamente.");
+        window.location.href = '/login'; // Redirección a la vista de acceso
+        return;
+    }
+
+    // Si usas Spring Security tradicional con Sesiones/Cookies, llamamos al endpoint de logout del backend
+    fetch('/logout', {
+        method: 'POST',
+        headers: {
+            // Spring Security exige el token CSRF para peticiones POST si no es una API apátrida
+            'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]')?.content || ''
+        }
+    })
+    .then(() => {
+        //alert("Sesión cerrada.");
+     localStorage.removeItem('usuarioId');
+     localStorage.removeItem('usuarioRol');
+     localStorage.removeItem('usuarioNombre');        
+     window.location.href = '/login.html'; // Redirección a la vista de acceso
+    })
+    .catch(error => {
+        console.error("Error al cerrar sesión:", error);
+        // En caso de fallo en el fetch de logout tradicional, forzamos redirección
+            localStorage.removeItem('usuarioId');
+     localStorage.removeItem('usuarioRol');
+     localStorage.removeItem('usuarioNombre');        
+
+        window.location.href = '/login.html'; 
+    });
+});
+
+        const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+
+        // Disable OverlayScrollbars on mobile devices to prevent touch interference
+        const isMobile = window.innerWidth <= 992;
+
+        if (
+          sidebarWrapper &&
+          OverlayScrollbarsGlobal?.OverlayScrollbars !== undefined &&
+          !isMobile
+        ) {
+          OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+            scrollbars: {
+              theme: Default.scrollbarTheme,
+              autoHide: Default.scrollbarAutoHide,
+              clickScroll: Default.scrollbarClickScroll,
+            },
+          });
+        }
+      });
+    </script>
+
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Buscar si quedó un módulo guardado antes de refrescar
+    const moduloActivo = localStorage.getItem('modulo-activo');
+    
+    if (moduloActivo) {
+      // Si existe, lo cargamos automáticamente
+      cargarModulo(moduloActivo);
+    }
+  });
+</script>
+  </body>
+  <!--end::Body-->
+</html>

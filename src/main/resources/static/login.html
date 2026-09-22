@@ -120,10 +120,23 @@
                     },
                     success: function(usuarioLogueado) {
                         // Si Spring Boot responde exitosamente (Http Status 200 OK)
-                        alert('¡Bienvenido de vuelta, ' + usuarioLogueado.nombre + '!');
+                       // alert('¡Bienvenido de vuelta, ' + usuarioLogueado.nombre + '!');
                         
                         // Puedes guardarlo en la sesión del navegador si lo deseas
                         sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
+                        localStorage.setItem('usuarioId', usuarioLogueado.idusuario);
+                        localStorage.setItem('usuarioRol', usuarioLogueado.rol.idroles);
+                        localStorage.setItem('usuarioNombre', usuarioLogueado.nombre);
+
+setTimeout(function() {
+                            const id = usuarioLogueado.idusuario;
+                            const rol = usuarioLogueado.rol.idroles;
+                            const nombre = encodeURIComponent(usuarioLogueado.nombre);
+                          //  alert('¡Bienvenido de vuelta, con rol ' + JSON.stringify(usuarioLogueado) + '!');
+
+                            // Saltamos al index enviándolos también por la URL como doble respaldo infalible
+                            window.location.href = "index.html?id=" + id + "&rol=" + rol + "&nombre=" + nombre;
+                        }, 200); 
                       },
                     error: function(xhr) {
                         // Si las credenciales fallan (Http Status 401 Unauthorized)

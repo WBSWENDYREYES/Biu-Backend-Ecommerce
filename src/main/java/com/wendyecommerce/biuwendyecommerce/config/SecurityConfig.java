@@ -19,31 +19,26 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable()) 
             
             .authorizeHttpRequests(auth -> auth
-                // 1. Permitimos acceso libre a los métodos GET de productos
-                .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
+                // 1. Recursos estáticos e íconos (Acceso libre absoluto)
+                .requestMatchers("/favicon.ico", "/assets/**", "/css/**", "/js/**", "/plugins/**", "/dist/**").permitAll()
+                .requestMatchers("/Scripts/**", "/Content/**").permitAll()
+                  .requestMatchers(HttpMethod.GET, "/api/categorias/**").permitAll()
+           // 2. CAMBIO CRUCIAL: Permitimos el acceso a las páginas HTML para que JS pueda inyectarlas
+                .requestMatchers("/paginas/**").permitAll() 
+                   .requestMatchers(HttpMethod.POST, "/api/categorias/**").hasAuthority("ADMINISTRADOR")
+        
+                // 3. Páginas base del sistema
+                .requestMatchers("/", "/login.html", "/index.html").permitAll()
                 
-                // 2. CORREGIDO: Agregamos explícitamente "/login.html" a los accesos permitidos
-                .requestMatchers("/", "/login.html", "/css/**", "/js/**", "/assets/**", "/Scripts/**", "/Content/**").permitAll()
+                // 4. Endpoints de la API para Login y Registro
                 .requestMatchers(HttpMethod.POST, "/api/usuarios/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/usuarios/crear").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/usuarios/listaUsuarios").permitAll()
+                // 5. Permite ver productos sin estar logueado (Público)
+                .requestMatchers(HttpMethod.GET, "/api/productos/**").permitAll()
              
-                // 3. Cualquier otra petición requerirá estar autenticado
+                // Cualquier otra petición (POST, PUT, DELETE de tu ProductoController) requerirá autenticación
                 .anyRequest().authenticated()
-            )
-            
-            // 4. CORREGIDO: Apuntamos la página de login al archivo físico real .html
-            .formLogin(form -> form
-                .loginPage("/login.html") // 👈 Cambiado de "/login" a "/login.html"
-                .usernameParameter("email") 
-                .passwordParameter("password")
-                .defaultSuccessUrl("/api/productos", true) 
-                .permitAll()
-            )
-            
-            .logout(logout -> logout
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login.html?logout") // 👈 Cambiado también aquí
-                .permitAll()
             );
 
         return http.build();
