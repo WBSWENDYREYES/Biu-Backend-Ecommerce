@@ -1,35 +1,24 @@
+
 package com.wendyecommerce.biuwendyecommerce.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "roles")
 public class Roles {
+    private int id;
+    private String nombre;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idroles;
-    
-    private String nombreRol; // Aquí guardarás "CLIENTE", "ADMINISTRADOR", etc.
+    // Constructor vacío
+    public Roles() {}
 
-    // Constructor vacío obligatorio
-    public Roles() {
-    }
-
-    // Constructor con parámetros
-    public Roles(int idroles, String nombreRol) {
-        this.idroles = idroles;
-        this.nombreRol = nombreRol;
+    // Constructor completo
+    public Roles(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+       
     }
 
     // Getters y Setters
-    public int getIdroles() { return idroles; }
-    public void setIdroles(int idroles) { this.idroles = idroles; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public String getNombreRol() { return nombreRol; }
-    public void setNombreRol(String nombreRol) { this.nombreRol = nombreRol; }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }

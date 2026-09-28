@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE 4 | Data Tables</title>
+    <title>SOFTWENDY | Data Tables</title>
 
     <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
     <script>
@@ -144,11 +144,11 @@
               </div>
               <div class="card-body">
                 <div class="d-flex gap-2 mb-3">
-                   <button id="export-csv" type="button" class="btn btn-sm btn-outline-primary">
-                    <i class="bi bi-filetype-csv me-1" aria-hidden="true"></i>
+                   <button id="btn-crear" type="button" class="btn btn-sm btn-outline-primary" >
+                    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
                     Crear
                   </button>
-                  <button disabled id="btn-editar" type="button" class="btn btn-sm btn-outline-warning">
+                  <button disabled id="btn-editar" type="button" class="btn btn-sm btn-outline-warning" >
                     <i class="bi bi-pencil me-1" aria-hidden="true"></i>
                     Editar
                   </button>
@@ -168,7 +168,7 @@
                 <div id="users-table"></div>
               </div>
               <div class="card-footer text-secondary small">
-                DEsarrollado por por
+                Desarrollado por por
                 <a href="https://tabulator.info/" target="_blank" rel="noopener">Tabulator</a>
                 &mdash; vanilla JS, no jQuery required.
               </div>
@@ -186,11 +186,119 @@
           Copyright &copy; 2014-2026&nbsp;
           <a href="https://adminlte.io" class="text-decoration-none">Ing. Wendy Reyes</a>.
         </strong>
-        All rights reserved.
+        Todos los derechos reservados.
         <!--end::Copyright-->
       </footer>
       <!--end::Footer-->
     </div>
+
+  <div class="modal fade bi-plus-lg" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+ <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+               <h4 class="mb-0" id="formTitle">Formulario de Registro de Productos</h4>
+       <button type="text" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+      <div class="modal-body">
+      <div class="card shadow">
+     
+        <div class="card-body">
+            <!-- Formulario -->
+            <form id="productForm" class="needs-validation" novalidate>
+                
+                <!-- ID Oculto para el Modo Actualización -->
+
+                <div class="row g-3">
+                           <!-- productId -->
+                    <div class="col-md-6">
+                        <label for="productId" class="form-label">Id Producto</label>
+                        <input type="text" class="form-control" name="productoid" id="productoid" disabled>
+                    </div>
+
+                    <!-- Referencia -->
+                    <div class="col-md-6">
+                        <label for="referencia" class="form-label">Referencia / Código</label>
+                        <input type="text" class="form-control" id="referencia" placeholder="Ej: REF-1029" required>
+                        <div class="invalid-feedback">Por favor, ingrese la referencia del producto.</div>
+                    </div>
+
+                    <!-- Nombre -->
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre del Producto</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Ej: Camiseta Deportiva" required>
+                        <div class="invalid-feedback">Por favor, ingrese el nombre del producto.</div>
+                    </div>
+
+                    <!-- Precio -->
+                    <div class="col-md-6">
+                        <label for="precio" class="form-label">Precio</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" step="0.01" min="0" class="form-control" id="precio" placeholder="0.00" required>
+                            <div class="invalid-feedback">Por favor, ingrese un precio válido (mayor o igual a 0).</div>
+                        </div>
+                    </div>
+
+                    <!-- Existencia (Stock) -->
+                    <div class="col-md-6">
+                        <label for="existencia" class="form-label">Existencia / Stock disponible</label>
+                        <input type="number" min="0" class="form-control" id="existencia" placeholder="Ej: 50" required>
+                    </div>
+                   
+                    
+                      <!-- Selector de Categoría -->
+                    <div class="col-md-6">
+                        <label for="categoria" class="form-label">Categoría</label>
+                        <select class="form-select" id="categoria" required>
+                            <option value="" selected disabled>Seleccione una categoría...</option>
+                            <!-- Los datos se inyectarán dinámicamente con JavaScript -->
+                        </select>
+                        <div class="invalid-feedback">Por favor, seleccione una categoría.</div>
+                    </div>
+
+                    <!-- Selector de Marca -->
+                    <div class="col-md-6">
+                        <label for="marca" class="form-label">Marca</label>
+                        <select class="form-select" id="marca" required>
+                            <option value="" selected disabled>Seleccione una marca...</option>
+                            <!-- Los datos se inyectarán dinámicamente con JavaScript -->
+                        </select>
+                        <div class="invalid-feedback">Por favor, seleccione una marca.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="imagen" class="form-label">URL imagen</label>
+                        <input type="text" class="form-control" id="imagen" >
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="col-12">
+                        <label for="descripcion" class="form-label">Descripción Detallada</label>
+                        <textarea class="form-control" id="descripcion" rows="3" placeholder="Escriba aquí los detalles del producto..." required></textarea>
+                        <div class="invalid-feedback">Por favor, ingrese una descripción.</div>
+                    </div>
+
+       
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="mt-4 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btn-guardar-producto">Guardar Producto</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+  </div>
+</div>   
+<!-- crear y salvar marcas-->
+<script>
+
+// Instanciamos el modal de Bootstrap
+
+</script> 
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script
       src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
@@ -258,130 +366,175 @@
       };
 
       document.addEventListener('DOMContentLoaded', () => {
-        const data = [
-          {
-            id: 1,
-            name: 'Olivia Bennett',
-            email: 'olivia@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2024-03-12',
-          },
-          {
-            id: 2,
-            name: 'Liam Carter',
-            email: 'liam@example.com',
-            role: 'Editor',
-            status: 'Active',
-            joined: '2024-04-08',
-          },
-          {
-            id: 3,
-            name: 'Emma Dawson',
-            email: 'emma@example.com',
-            role: 'Viewer',
-            status: 'Invited',
-            joined: '2024-06-21',
-          },
-          {
-            id: 4,
-            name: 'Noah Evans',
-            email: 'noah@example.com',
-            role: 'Editor',
-            status: 'Suspended',
-            joined: '2024-07-15',
-          },
-          {
-            id: 5,
-            name: 'Ava Foster',
-            email: 'ava@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2024-08-30',
-          },
-          {
-            id: 6,
-            name: 'Ethan Grant',
-            email: 'ethan@example.com',
-            role: 'Viewer',
-            status: 'Active',
-            joined: '2024-09-14',
-          },
-          {
-            id: 7,
-            name: 'Sophia Hayes',
-            email: 'sophia@example.com',
-            role: 'Editor',
-            status: 'Active',
-            joined: '2024-10-02',
-          },
-          {
-            id: 8,
-            name: 'Mason Ingram',
-            email: 'mason@example.com',
-            role: 'Viewer',
-            status: 'Invited',
-            joined: '2024-11-19',
-          },
-          {
-            id: 9,
-            name: 'Isabella Jones',
-            email: 'isabella@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2025-01-05',
-          },
-          {
-            id: 10,
-            name: 'Lucas Klein',
-            email: 'lucas@example.com',
-            role: 'Viewer',
-            status: 'Suspended',
-            joined: '2025-02-18',
-          },
-          {
-            id: 11,
-            name: 'Mia Lopez',
-            email: 'mia@example.com',
-            role: 'Editor',
-            status: 'Active',
-            joined: '2025-03-22',
-          },
-          {
-            id: 12,
-            name: 'Logan Moore',
-            email: 'logan@example.com',
-            role: 'Viewer',
-            status: 'Active',
-            joined: '2025-04-09',
-          },
-          {
-            id: 13,
-            name: 'Charlotte Nelson',
-            email: 'charlotte@example.com',
-            role: 'Admin',
-            status: 'Active',
-            joined: '2025-04-27',
-          },
-          {
-            id: 14,
-            name: 'Henry Owens',
-            email: 'henry@example.com',
-            role: 'Editor',
-            status: 'Invited',
-            joined: '2025-05-11',
-          },
-          {
-            id: 15,
-            name: 'Amelia Price',
-            email: 'amelia@example.com',
-            role: 'Viewer',
-            status: 'Active',
-            joined: '2025-05-17',
-          },
-        ];
+// CARGAR MARCA 
+async function cargarMarcas() {
+    const selectMarca = document.getElementById("marca");
+    try {
+        const response = await fetch(
+            "/api/marcas/lista",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            }
+        );
+        if (!response.ok) {
+            throw new Error("Error HTTP: " + response.status);
+        }
+        const marcas = await response.json();
+        // Limpiar las opciones actuales
+        selectMarca.innerHTML = `
+            <option value="" selected disabled>
+                Seleccione una marca...
+            </option>
+        `;
+        // Agregar las marcas
+        marcas.forEach(marca => {
+            const option = document.createElement("option");
+            option.value = marca.id;
+            option.textContent = marca.nombre;
+            selectMarca.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar las marcas:", error);
+        selectMarca.innerHTML = `
+            <option value="" selected disabled>
+                Error al cargar marcas
+            </option>
+        `;
+    }
+}
 
-        const table = new Tabulator('#users-table', {
+// CARGAR CATEGORIA 
+async function cargarCategorias() {
+    const selectCategoria = document.getElementById("categoria");
+    try {
+        const response = await fetch(
+            "/api/categorias/lista",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({})
+            }
+        );
+        if (!response.ok) {
+            throw new Error("Error HTTP: " + response.status);
+        }
+        const categorias = await response.json();
+        // Limpiar las opciones actuales
+        selectCategoria.innerHTML = `
+            <option value="" selected disabled>
+                Seleccione una categoria...
+            </option>
+        `;
+        // Agregar las marcas
+        categorias.forEach(categoria => {
+            const option = document.createElement("option");
+            option.value = categoria.id;
+            option.textContent = categoria.nombre;
+            selectCategoria.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar las marcas:", error);
+        selectCategoria.innerHTML = `
+            <option value="" selected disabled>
+                Error al cargar categorias
+            </option>
+        `;
+    }
+}
+cargarMarcas();
+cargarCategorias();
+const modalProducto = new bootstrap.Modal(document.getElementById('productoModal'));
+
+// 1. Evento para tu botón CREAR (Asegúrate de que tu botón tenga id="btn-crear")
+document.getElementById('btn-crear').addEventListener('click', () => {
+modalProducto.show();
+});
+
+document.getElementById('btn-editar').addEventListener('click', () => {
+  modalProducto.show();
+});
+
+// 2. Evento para el botón GUARDAR dentro del modal
+document.getElementById('btn-guardar-producto').addEventListener('click', () => {
+    const nombre = document.getElementById('nombre').value.trim();
+    const categoria = document.getElementById('categoria').value.trim();
+    const marca = document.getElementById('marca').value.trim();
+    const productoid = document.getElementById('productoid').value.trim();
+    const existencia = document.getElementById('existencia').value.trim();
+    const precio = document.getElementById('precio').value.trim();
+    const referencia = document.getElementById('referencia').value.trim();
+    const descrip = document.getElementById('descripcion').value.trim();
+    const imagen = document.getElementById('imagen').value.trim();
+ //alert(categoria);
+ //alert(marca);
+    if (!nombre) {
+        alert("El nombre del Producto es obligatorio");
+        return;
+    }
+  if (!referencia) {
+        alert("Tienes que introducir la Referencia del producto");
+        return;
+    }
+ if (!marca) {
+        alert("Tiene que seleccinar una marca . . ");
+        return;
+    }
+ if (!categoria) {
+        alert("Tiene que seleccinar una categoria . . ");
+        return;
+    }
+
+    const usuarioId = localStorage.getItem('usuarioId'); 
+    if (!usuarioId) {
+        alert("Error: No se encontró una sesión activa de usuario.");
+        window.location.href = '/login.html';
+        return;
+    }
+    // Enviamos los datos al servidor
+    fetch('/api/productos/salvarProducto', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify({id: productoid, nombre: nombre,referencia : referencia,
+            existencia: existencia, precio : precio,descripcion : descrip,
+            imagen : imagen, idcategoria : categoria, idmarca : marca,  
+            usuarioId: parseInt(usuarioId) })
+    })
+    .then(response => {
+        //  SI EL SERVIDOR DEVUELVE 403 (FORBIDDEN), SIGNIFICA QUE NO ES ADMIN
+        if (response.status === 403) {
+            throw new Error("Acceso denegado: Solo los administradores pueden crear Categorias.");
+        }
+        if (!response.ok) {
+            throw new Error("Hubo un error al guardar el Producto.");
+        }
+        return response.json();
+    })
+    .then(data => {
+        modalProducto.hide(); // Cerramos la ventana modal
+        
+        // Si tienes una tabla de marcas, aquí la refrescas:
+       //  alert(JSON.stringify(data, null, 2));
+      
+       cargarDatosProductos(); // Recargamos la tabla de categorías
+
+    })
+    .catch(error => {
+        // Aquí atrapamos el error 403 y se lo mostramos al usuario
+        alert(error.message);
+    });
+});
+// tabla productos
+        let data = [];
+const table = new Tabulator('#users-table', {
   data: data,
   layout: 'fitColumns',
   pagination: true,
@@ -418,7 +571,6 @@
           if(r !== row) r.deselect(); // Mantiene únicamente la última fila marcada
        });
     }
-    alert("Usuario seleccionado: " + row.getData().name);
     document.getElementById('btn-editar').disabled = false;
   },
 
@@ -444,46 +596,99 @@
              fila.select();
          }      }
     },
-    { title: '#', field: 'id', width: 60, headerSort: true },
-    { title: 'Name', field: 'name', headerFilter: 'input' },
-    { title: 'Email', field: 'email', headerFilter: 'input' },
-    {
-      title: 'Role',
-      field: 'role',
-      headerFilter: 'list',
-      headerFilterParams: { values: ['', 'Admin', 'Editor', 'Viewer'] },
-      width: 120,
-    },
-    {
-      title: 'Status',
-      field: 'status',
-      formatter: statusBadge,
-      headerFilter: 'list',
-      headerFilterParams: { values: ['', 'Active', 'Invited', 'Suspended'] },
-      width: 130,
-      hozAlign: 'center',
-    },
-    { title: 'Joined', field: 'joined', sorter: 'date', width: 130 },
+   { title: '#', field: 'id', width: 60, headerSort: true },
+   { title: 'Referencia', field: 'Referencia', headerFilter: 'input' },
+   { title: 'Nombre', field: 'Nombre', headerFilter: 'input' },
+   { title: 'Precio', field: 'Precio', headerFilter: 'input' },
+   { title: 'Existencia', field: 'Existencia', headerFilter: 'input' },
+   { title: 'Categoria', field: 'nombreCategoria', headerFilter: 'input' },
+   { title: 'Marca', field: 'nombreMarca', headerFilter: 'input' },
+   
   ],
 });
+function cargarDatosProductos() {
+  const URL_API = '/api/productos/lista'; // Asegúrate de usar el puerto correcto de tu servidor backend
 
-// Forzar el redibujado de la casilla visual al cambiar el estado
+   fetch(URL_API, {
+  //  LA CORRECCIÓN: El método y las opciones van dentro de las llaves como segundo parámetro
+  method: 'POST', 
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({}),
+}).then(response => {
+      if (!response.ok) {
+        throw new Error('Error en la respuesta del servidor');
+      }
+      return response.json();
+    })
+    .then(productos => {
+     //alert(JSON.stringify(productos, null, 2));
+        // 3. Mapeamos los datos de tu entidad Producto a los campos de tu tabla frontend
+    //  alert('Datos obtenidos del backend: ' + JSON.stringify(productos, null, 2));
+      data = productos.map(prod => ({
+        id: prod.id,                  // Reemplaza 'id' por el nombre del atributo en tu clase Java Producto
+        Referencia: prod.referencia,  // Reemplaza 'referencia' por tu atributo Java
+        Nombre: prod.nombre,          // Reemplaza 'nombre' por tu atributo Java
+        Precio: prod.precio,          // Reemplaza 'precio' por tu atributo Java
+        Existencia: prod.existencia,  // Reemplaza 'existencia' por tu atributo Java
+        IdMarca: prod.idMarca,              // Reemplaza 'marca' por tu atributo Java
+        IdCategoria: prod.idCategoria,              // Reemplaza 'marca' por tu atributo Java
+        Imagen: prod.imagen,
+        nombreMarca: prod.nombreMarca,
+        nombreCategoria: prod.nombreCategoria,     // Reemplaza 'categoria' por tu atributo Java
+        Descripcion: prod.descripcion,     // Reemplaza 'categoria' por tu atributo Java
+   }));
+
+      table.setData(data);
+   //   document.getElementById('table-filter').value = JSON.stringify(data, null, 2);
+      // 4. IMPORTANTE: Aquí debes llamar a la función que renderiza o dibuja tu tabla
+      // Ejemplo: inicializarTabla(data); o actualizarUI();
+      console.log('Datos cargados con éxito:', data);
+    })
+    .catch(error => {
+      alert('Hubo un problema al obtener los productos:'+error.message);
+
+
+    });
+}
+cargarDatosProductos();
+
 table.on("rowSelectionChanged", function(data, rows){
     table.redraw(true); // Redibuja los cuadritos ☑ y ☐
 
     // Si hay una fila seleccionada (rows contiene elementos)
     if (rows.length > 0) {
         const filaActiva = rows[0]; // Como es selección única, tomamos la primera
-        const datosUsuario = filaActiva.getData();
+        const datosCategoria = filaActiva.getData();
 
         // 1. Mostramos tu alerta de prueba
-        alert("Usuario seleccionado: " + datosUsuario.name);
-
         // 2. Activamos el botón Editar
         const btnEditar = document.getElementById('btn-editar');
+       
         if (btnEditar) {
             btnEditar.disabled = false;
+           // alert(datosCategoria);
+           // alert(JSON.stringify(datosCategoria, null, 2));
+    
+   const categoria = document.getElementById('categoria');
+   const marca = document.getElementById('marca');
+     categoria.value = datosCategoria.IdCategoria;
+      marca.value = datosCategoria.IdMarca;
+     // alert(datosCategoria.IdCategoria);
+     // alert(datosCategoria.IdMarca);
+    document.getElementById('nombre').value = datosCategoria.Nombre;
+      document.getElementById('productoid').value = datosCategoria.id;
+     document.getElementById('existencia').value = datosCategoria.Existencia;
+     document.getElementById('precio').value = datosCategoria.Precio;
+     document.getElementById('imagen').value = datosCategoria.Imagen;
+     document.getElementById('referencia').value = datosCategoria.Referencia;
+      document.getElementById('descripcion').value = datosCategoria.Descripcion;
+
         }
+
+        
+
     } else {
         // Si no hay nada seleccionado, volvemos a apagar el botón
         const btnEditar = document.getElementById('btn-editar');
@@ -497,8 +702,7 @@ table.on("rowSelectionChanged", function(data, rows){
           if (value) {
             table.setFilter([
               [
-                { field: 'name', type: 'like', value: value },
-                { field: 'email', type: 'like', value: value },
+                { field: 'Nombre', type: 'like', value: value },
               ],
             ]);
           } else {
@@ -519,10 +723,23 @@ table.on("rowSelectionChanged", function(data, rows){
 
 const datosSeleccionados = table.getSelectedData();
 if (datosSeleccionados.length > 0) {
-    const usuarioSeleccionado = datosSeleccionados[0];
-    console.log("ID del usuario elegido:", usuarioSeleccionado.id);
+    const CategoriaSeleccionado = datosSeleccionados[0];
+    console.log("ID de la categoría elegida:", CategoriaSeleccionado.id);
 }
+// 2. Función para obtener los datos desde Spring Boot
+
+// 5. Ejecutamos la función inmediatamente al cargar este script de módulo
+
+
+  
+// Forzar el redibujado de la casilla visual al cambiar el estado
+
+  
 
     </script>
+
+
+
+
   </body>
 </html>

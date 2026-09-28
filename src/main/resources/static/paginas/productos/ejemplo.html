@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>SOFTWENDY | Data Tables</title>
+    <title>AdminLTE 4 | Data Tables</title>
 
     <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
     <script>
@@ -126,7 +126,7 @@
           <div class="container-fluid">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">USUARIOS</h3>
+                <h3 class="card-title">PRODUCTOS</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 16rem">
                     <span class="input-group-text">
@@ -144,11 +144,11 @@
               </div>
               <div class="card-body">
                 <div class="d-flex gap-2 mb-3">
-                   <button id="btn-crear" type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#usuarioModal">
-                    <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
+                   <button id="export-csv" type="button" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-filetype-csv me-1" aria-hidden="true"></i>
                     Crear
                   </button>
-                  <button disabled id="btn-editar" type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#usuarioModal">
+                  <button disabled id="btn-editar" type="button" class="btn btn-sm btn-outline-warning">
                     <i class="bi bi-pencil me-1" aria-hidden="true"></i>
                     Editar
                   </button>
@@ -186,88 +186,11 @@
           Copyright &copy; 2014-2026&nbsp;
           <a href="https://adminlte.io" class="text-decoration-none">Ing. Wendy Reyes</a>.
         </strong>
-        Todos los derechos reservados.
+        All rights reserved.
         <!--end::Copyright-->
       </footer>
       <!--end::Footer-->
     </div>
-
-  <!-- Modal para Crear Marca -->
- <div class="modal fade bi-plus-lg" id="usuarioModal" tabindex="-1" aria-labelledby="usuarioModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
- <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-               <h4 class="mb-0" id="formTitle">Formulario de Registro de Usuario</h4>
-       <button type="text" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-      <div class="modal-body">
-      <div class="card shadow">
-     
-        <div class="card-body">
-            <!-- Formulario -->
-            <form id="productForm" class="needs-validation" novalidate>
-                
-                <!-- ID Oculto para el Modo Actualización -->
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label for="Idusuario" class="form-label">Id Usuario </label>
-                        <input type="text" class="form-control" id="Idusuario" disabled >
-                    </div>
-                    <!-- Nombre -->
-                    <div class="col-md-6">
-                        <label for="nombreUsuario" class="form-label">Nombre </label>
-                        <input type="text" class="form-control" id="nombreUsuario" placeholder="Ej: Wendy Reyes" required>
-                        <div class="invalid-feedback">Por favor, ingrese el nombre del usuario.</div>
-                    </div>
-
-                    <!-- Telefonos -->
-                    <div class="col-md-6">
-                        <label for="telefonosUsuario" class="form-label">Teléfonos</label>
-                        <input type="text" class="form-control" id="telefonosUsuario" >
-                    </div>
-
-                                     <!-- email -->
-                    <div class="col-md-6">
-                        <label for="emailUsuario" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="emailUsuario" >
-                    </div>
-                    
-                    <!-- Precio -->
-                    <div class="col-md-6">
-                   <label for="idroles" class="form-label">Rol del Usuario</label>
-  <select class="form-select" id="idroles" name="idroles" required>
-    <!-- Opción por defecto (deshabilitada para obligar a elegir) -->
-    <option value="0" selected disabled>Selecciona un rol...</option>
-    
-    <!-- Opciones del menú desplegable -->
-    <option value="1">Administrador</option>
-    <option value="2">Cliente</option>
-    <option value="3">Soporte Técnico</option>
-  </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="passwordUsuario" class="form-label">Clave</label>
-                        <input type="password" class="form-control" id="passwordUsuario" required >
-                    </div>
-                               <div class="col-md-6">
-                        <label for="passwordUsuario1" class="form-label">Confirmar Clave</label>
-                        <input type="password" class="form-control" id="passwordUsuario1" required >
-                    </div>  
-         <!-- Botones de Acción -->
-                <div class="mt-4 d-flex justify-content-end gap-2">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                      <button type="button" name="btn-guardar-usuario" id="btn-guardar-usuario" class="btn btn-success">Guardar Usuario</button>
-                </div>
-     
-            </form>
-        </div>
-    </div>
-</div>
-  </div>
-</div>
-<!-- crear y salvar marcas-->
-
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script
       src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
@@ -335,95 +258,130 @@
       };
 
       document.addEventListener('DOMContentLoaded', () => {
+        const data = [
+          {
+            id: 1,
+            name: 'Olivia Bennett',
+            email: 'olivia@example.com',
+            role: 'Admin',
+            status: 'Active',
+            joined: '2024-03-12',
+          },
+          {
+            id: 2,
+            name: 'Liam Carter',
+            email: 'liam@example.com',
+            role: 'Editor',
+            status: 'Active',
+            joined: '2024-04-08',
+          },
+          {
+            id: 3,
+            name: 'Emma Dawson',
+            email: 'emma@example.com',
+            role: 'Viewer',
+            status: 'Invited',
+            joined: '2024-06-21',
+          },
+          {
+            id: 4,
+            name: 'Noah Evans',
+            email: 'noah@example.com',
+            role: 'Editor',
+            status: 'Suspended',
+            joined: '2024-07-15',
+          },
+          {
+            id: 5,
+            name: 'Ava Foster',
+            email: 'ava@example.com',
+            role: 'Admin',
+            status: 'Active',
+            joined: '2024-08-30',
+          },
+          {
+            id: 6,
+            name: 'Ethan Grant',
+            email: 'ethan@example.com',
+            role: 'Viewer',
+            status: 'Active',
+            joined: '2024-09-14',
+          },
+          {
+            id: 7,
+            name: 'Sophia Hayes',
+            email: 'sophia@example.com',
+            role: 'Editor',
+            status: 'Active',
+            joined: '2024-10-02',
+          },
+          {
+            id: 8,
+            name: 'Mason Ingram',
+            email: 'mason@example.com',
+            role: 'Viewer',
+            status: 'Invited',
+            joined: '2024-11-19',
+          },
+          {
+            id: 9,
+            name: 'Isabella Jones',
+            email: 'isabella@example.com',
+            role: 'Admin',
+            status: 'Active',
+            joined: '2025-01-05',
+          },
+          {
+            id: 10,
+            name: 'Lucas Klein',
+            email: 'lucas@example.com',
+            role: 'Viewer',
+            status: 'Suspended',
+            joined: '2025-02-18',
+          },
+          {
+            id: 11,
+            name: 'Mia Lopez',
+            email: 'mia@example.com',
+            role: 'Editor',
+            status: 'Active',
+            joined: '2025-03-22',
+          },
+          {
+            id: 12,
+            name: 'Logan Moore',
+            email: 'logan@example.com',
+            role: 'Viewer',
+            status: 'Active',
+            joined: '2025-04-09',
+          },
+          {
+            id: 13,
+            name: 'Charlotte Nelson',
+            email: 'charlotte@example.com',
+            role: 'Admin',
+            status: 'Active',
+            joined: '2025-04-27',
+          },
+          {
+            id: 14,
+            name: 'Henry Owens',
+            email: 'henry@example.com',
+            role: 'Editor',
+            status: 'Invited',
+            joined: '2025-05-11',
+          },
+          {
+            id: 15,
+            name: 'Amelia Price',
+            email: 'amelia@example.com',
+            role: 'Viewer',
+            status: 'Active',
+            joined: '2025-05-17',
+          },
+        ];
 
-
-const modalUsuario = new bootstrap.Modal(document.getElementById('usuarioModal'));
-// 1. Evento para tu botón CREAR (Asegúrate de que tu botón tenga id="btn-crear")
-document.getElementById('btn-crear').addEventListener('click', () => {
- modalUsuario.show();
- //  window.parent.cargarModulo('usuarios/editarusuario.html');
- 
-});
-
-
-document.getElementById('btn-editar').addEventListener('click', () => {
-
-
- modalUsuario.show();
-    
-   //  window.parent.cargarModulo('usuarios/editarusuario.html');});
-});
-// 2. Evento para el botón GUARDAR dentro del modal
-document.getElementById('btn-guardar-usuario').addEventListener('click', () => {
-    
-   const idusuario = document.getElementById('Idusuario').value.trim();
-  const nombre = document.getElementById('nombreUsuario').value.trim();
-  const telefonos = document.getElementById('telefonosUsuario').value.trim();
-  const email = document.getElementById('emailUsuario').value.trim();
-  const idroles = document.getElementById('idroles').value.trim();
-  const password = document.getElementById('passwordUsuario').value.trim();
-  const password1 = document.getElementById('passwordUsuario1').value.trim();
- 
-    if (!nombre) {
-        alert("El nombre del usuario es obligatorio");
-        return;
-    }
-        if (!email) {
-        alert("El email del usuario es obligatorio");
-        return;
-    }
-    if (password != password1)
-    {
-      alert("Tiene que confirmar la Clave . . .");
-      return;
-    }
-    const usuarioId = localStorage.getItem('usuarioRol');
-    
-    //alert(usuarioId+ " "+nombre+ " "+telefonos+email+" "+password+" "+idroles);
-    if (!usuarioId) {
-        alert("Error: No se encontró una sesión activa de usuario.");
-        window.location.href = '/login.html';
-        return;
-    }
-    // Enviamos los datos al servidor
-     fetch('/api/usuarios/SalvarUsuario', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id : parseInt(idusuario), nombre: nombre,
-            telefonos: telefonos,
-            email: email,
-            password: password,Rol : parseInt(idroles),
-            usuarioId: parseInt(usuarioId) })
-    })
-    .then(response => {
-        //  SI EL SERVIDOR DEVUELVE 403 (FORBIDDEN), SIGNIFICA QUE NO ES ADMIN
-        if (response.status === 403) {
-            throw new Error("Acceso denegado: Solo los administradores pueden crear Categorias.");
-        }
-        if (!response.ok) {
-            throw new Error("Hubo un error al guardar la categoría."+response.message);
-        }
-        return response.json();
-    })
-    .then(data => {
-      //  alert("Categoría guardada con éxito!");
-        
-        // Si tienes una tabla de marcas, aquí la refrescas:
-
-     modalUsuario.hide();
-     cargarDatosUsuarios(); 
-
-    })
-    .catch(error => {
-        // Aquí atrapamos el error 403 y se lo mostramos al usuario
-        alert(error.message);
-    });
-});
-
-        let data = [];
-const table = new Tabulator('#users-table', {
+        const table = new Tabulator('#users-table', {
   data: data,
   layout: 'fitColumns',
   pagination: true,
@@ -456,13 +414,12 @@ const table = new Tabulator('#users-table', {
     // Si el usuario selecciona una fila, este método deselecciona las demás de forma inmediata
     const rows = table.getSelectedRows();
     if(rows.length > 1){
-
-
        rows.forEach(r => {
           if(r !== row) r.deselect(); // Mantiene únicamente la última fila marcada
        });
     }
-
+    alert("Usuario seleccionado: " + row.getData().name);
+    document.getElementById('btn-editar').disabled = false;
   },
 
   columns: [
@@ -488,62 +445,29 @@ const table = new Tabulator('#users-table', {
          }      }
     },
     { title: '#', field: 'id', width: 60, headerSort: true },
-   { title: 'Nombre', field: 'Nombre', headerFilter: 'input' },
-   { title: 'Email', field: 'Email', headerFilter: 'input' },
-   { title: 'Telefonos', field: 'Telefonos', headerFilter: 'input' },
-   { title: 'Rol', field: 'Rol', headerFilter: 'input' }
+    { title: 'Name', field: 'name', headerFilter: 'input' },
+    { title: 'Email', field: 'email', headerFilter: 'input' },
+    {
+      title: 'Role',
+      field: 'role',
+      headerFilter: 'list',
+      headerFilterParams: { values: ['', 'Admin', 'Editor', 'Viewer'] },
+      width: 120,
+    },
+    {
+      title: 'Status',
+      field: 'status',
+      formatter: statusBadge,
+      headerFilter: 'list',
+      headerFilterParams: { values: ['', 'Active', 'Invited', 'Suspended'] },
+      width: 130,
+      hozAlign: 'center',
+    },
+    { title: 'Joined', field: 'joined', sorter: 'date', width: 130 },
   ],
 });
-function cargarDatosUsuarios() {
-  const URL_API = '/api/usuarios/lista'; // Asegúrate de usar el puerto correcto de tu servidor backend
-//alert(localStorage.getItem('usuarioId'));
 
-  fetch(URL_API, {
-  // 🚀 LA CORRECCIÓN: El método y las opciones van dentro de las llaves como segundo parámetro
-  method: 'POST', 
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ 
-    Rol: parseInt(localStorage.getItem('usuarioRol') || '0') 
-  })
-})
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error en la respuesta del servidor');
-      }
-      return response.json();
-    })
-    .then(usuarios => {
-      // 3. Mapeamos los datos de tu entidad Usuario a los campos de tu tabla frontend
-    //  alert(JSON.stringify(usuarios));
-      data = usuarios.map(usuario => ({
-        id: usuario.id,                  // Reemplaza 'id' por el nombre del atributo en tu clase Java Usuario
-  Nombre: usuario.nombre ? usuario.nombre.trim() : '',          // Con trim() quitamos espacios vacíos de la BD
-  Telefonos: usuario.telefonos ? usuario.telefonos.trim() : '',          
-  Email: usuario.email ? usuario.email.trim() : '',          
-  Password: usuario.password ? usuario.password.trim() : '',          
-  
-  // 🚀 EXTRAEMOS SOLO EL ID DEL ROL:
-  // Si existe el objeto rol y tiene idroles, extrae el número; si no, por defecto deja 0 (o Cliente)
-  Rol: usuario.idroles ? usuario.idroles : 0         // Reemplaza 'nombre' por tu atributo Java
-      }));
-//alert(JSON.stringify(data));
-      table.setData(data);
-   //   document.getElementById('table-filter').value = JSON.stringify(data, null, 2);
-    // alert(JSON.stringify(data, null, 2));
-      // 4. IMPORTANTE: Aquí debes llamar a la función que renderiza o dibuja tu tabla
-      // Ejemplo: inicializarTabla(data); o actualizarUI();
-      console.log('Datos cargados con éxito:', data);
-    })
-    .catch(error => {
-      alert('Hubo un problema al obtener las categorías:'+error.message, error);
-
-
-    });
-}
-cargarDatosUsuarios();
-
+// Forzar el redibujado de la casilla visual al cambiar el estado
 table.on("rowSelectionChanged", function(data, rows){
     table.redraw(true); // Redibuja los cuadritos ☑ y ☐
 
@@ -553,34 +477,16 @@ table.on("rowSelectionChanged", function(data, rows){
         const datosUsuario = filaActiva.getData();
 
         // 1. Mostramos tu alerta de prueba
+        alert("Usuario seleccionado: " + datosUsuario.name);
+
         // 2. Activamos el botón Editar
-        
         const btnEditar = document.getElementById('btn-editar');
-      const cidusuario = document.getElementById('Idusuario');
-  const cnombre = document.getElementById('nombreUsuario');
-  const ctelefonos = document.getElementById('telefonosUsuario');
-  const cemail = document.getElementById('emailUsuario');
-  const cidroles = document.getElementById('idroles');
-  const cpassword = document.getElementById('passwordUsuario');
-  const cpassword1 = document.getElementById('passwordUsuario1');
- 
         if (btnEditar) {
             btnEditar.disabled = false;
-           cidusuario.value = datosUsuario.id;
-             cnombre.value = datosUsuario.Nombre;
-          ctelefonos.value = datosUsuario.Telefonos;
-           cemail.value = datosUsuario.Email;
-           cpassword.value = datosUsuario.Password;
-           cpassword1.value = datosUsuario.Password;
-          cidroles.value = datosUsuario.Rol;
-
-        //   alert(JSON.stringify(datosUsuario, null, 2));
-          }
+        }
     } else {
         // Si no hay nada seleccionado, volvemos a apagar el botón
         const btnEditar = document.getElementById('btn-editar');
-
-
         if (btnEditar) {
             btnEditar.disabled = true;
         }
@@ -591,7 +497,8 @@ table.on("rowSelectionChanged", function(data, rows){
           if (value) {
             table.setFilter([
               [
-                { field: 'Nombre', type: 'like', value: value },
+                { field: 'name', type: 'like', value: value },
+                { field: 'email', type: 'like', value: value },
               ],
             ]);
           } else {
@@ -609,25 +516,13 @@ table.on("rowSelectionChanged", function(data, rows){
           .getElementById('print-table')
           .addEventListener('click', () => table.print(false, true));
       });
+
 const datosSeleccionados = table.getSelectedData();
 if (datosSeleccionados.length > 0) {
-    const CategoriaSeleccionado = datosSeleccionados[0];
-    console.log("ID de la categoría elegida:", CategoriaSeleccionado.id);
+    const usuarioSeleccionado = datosSeleccionados[0];
+    console.log("ID del usuario elegido:", usuarioSeleccionado.id);
 }
-// 2. Función para obtener los datos desde Spring Boot
 
-// 5. Ejecutamos la función inmediatamente al cargar este script de módulo
-
-
-  
-// Forzar el redibujado de la casilla visual al cambiar el estado
-
-  
-    
     </script>
-
-
-
-
   </body>
 </html>

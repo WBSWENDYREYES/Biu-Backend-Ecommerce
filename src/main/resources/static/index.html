@@ -230,7 +230,7 @@
                 </ul>
               </li>
               
-              <li class="nav-item">
+              <li class="nav-item menu-open" >
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-box-seam-fill"></i>
                   <p>
@@ -246,7 +246,7 @@
                 </a>
               </li>
                   <li class="nav-item">
-                <a href="javascript:void(0);" onclick="cargarModulo('categorias/categoria.html')" class="nav-link">
+                <a href="javascript:void(0);" onclick="cargarModulo('marcas/marca.html')" class="nav-link">
                   <i class="nav-icon bi bi-box"></i>
                       <p>Marcas</p>
                     </a>
@@ -312,6 +312,16 @@
     <!--begin::Scripts del Sistema (Carga Dinámica y Control de Roles)-->
     <script>
       document.addEventListener("DOMContentLoaded", function() {
+
+    const moduloActivo = localStorage.getItem('modulo-activo');
+
+   
+    
+    if (moduloActivo) {
+      // Si existe, lo cargamos automáticamente
+      cargarModulo(moduloActivo);
+    }
+
           // 1. Obtener datos del usuario guardados en localStorage
           const nombre = localStorage.getItem('usuarioNombre');
           const rolId = localStorage.getItem('usuarioRol');
@@ -349,23 +359,62 @@
       });
 
       // 4. FUNCIÓN PARA INYECTAR LAS PÁGINAS DENTRO DEL CONTENEDOR PRINCIPAL
-      function cargarModulo(ruta) {
-       localStorage.setItem('modulo-activo', ruta);  
+  function cargarModulo(ruta) {
+
+    console.log("CARGANDO MODULO:", ruta);
+
+    localStorage.setItem('modulo-activo', ruta);
+
     const iframe = document.getElementById('iframe-principal');
     const dashboardInicio = document.getElementById('dashboard-inicio');
-    
-    if (dashboardInicio) dashboardInicio.style.display = 'none';
-    
-    // Mostramos el iframe y cambiamos su dirección URL
+
+    if (!iframe) {
+        console.error("No existe #iframe-principal");
+        return;
+    }
+
+    if (dashboardInicio) {
+        dashboardInicio.style.display = 'none';
+    }
+
     iframe.style.display = 'block';
-    
-    // Recuperamos los datos del usuario para pasarlos por URL si el módulo los necesita
+
     const id = localStorage.getItem('usuarioId');
     const rol = localStorage.getItem('usuarioRol');
-    const nombre = encodeURIComponent(localStorage.getItem('usuarioNombre') || '');
+    const nombre = encodeURIComponent(
+        localStorage.getItem('usuarioNombre') || ''
+    );
 
-    // Cargamos la página pasando los parámetros directamente
-    iframe.src = `/paginas/${ruta}?id=${id}&rol=${rol}&nombre=${nombre}`;
+    const url =
+        `/paginas/${ruta}?id=${encodeURIComponent(id || '')}` +
+        `&rol=${encodeURIComponent(rol || '')}` +
+        `&nombre=${nombre}`;
+
+    console.log("URL DEL IFRAME:", url);
+
+    const inicio = performance.now();
+
+    iframe.onload = function () {
+
+        const fin = performance.now();
+
+        console.log(
+            "IFRAME CARGADO EN:",
+            (fin - inicio).toFixed(0),
+            "ms"
+        );
+
+        // Avisar que el módulo terminó de cargar
+        try {
+            iframe.contentWindow.dispatchEvent(
+                new Event('moduloCargado')
+            );
+        } catch (error) {
+            console.error("Error notificando módulo:", error);
+        }
+    };
+
+    iframe.src = url;
 }
     </script>
     <!--end::Scripts del Sistema-->
@@ -412,7 +461,7 @@ document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
         localStorage.removeItem('user_data'); // Limpia si guardabas datos de apoyo
         
         alert("Sesión finalizada correctamente.");
-        window.location.href = '/login'; // Redirección a la vista de acceso
+        window.location.href = '/login.html'; // Redirección a la vista de acceso
         return;
     }
 
@@ -464,14 +513,47 @@ document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
     </script>
 
     <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Buscar si quedó un módulo guardado antes de refrescar
-    const moduloActivo = localStorage.getItem('modulo-activo');
+      window.onload = () => {
     
-    if (moduloActivo) {
-      // Si existe, lo cargamos automáticamente
-      cargarModulo(moduloActivo);
+};
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+  if (window.self !== window.top) return;
+   
+ const body = document.body;
+    const botonSidebar = document.querySelector('[data-lte-toggle="sidebar"]'); // El botón de las 3 rayitas
+
+    // 1. Recuperar el estado al cargar la página
+    const sidebarEstado = localStorage.getItem('sidebar-estado');
+    if (sidebarEstado === 'collapsed') {
+        body.classList.add('sidebar-collapse');
+        body.classList.remove('sidebar-open');
+    } else if (sidebarEstado === 'open') {
+        body.classList.add('sidebar-open');
+        body.classList.remove('sidebar-collapse');
     }
+
+    // 2. Escuchar cuando el usuario abre o cierra el menú para guardar el estado
+    if (botonSidebar) {
+        botonSidebar.addEventListener('click', () => {
+            // AdminLTE cambia las clases con un pequeño retraso, esperamos 100ms para leer la clase final
+            setTimeout(() => {
+                if (body.classList.contains('sidebar-collapse')) {
+                    localStorage.setItem('sidebar-estado', 'collapsed');
+                } else {
+                    localStorage.setItem('sidebar-estado', 'open');
+                }
+            }, 100);
+        });
+    }
+
+     if (window.self !== window.top) {
+        return; // Si está dentro de un iframe, detiene la ejecución inmediatamente
+    }
+
+    // Buscar si quedó un módulo guardado antes de refrescar
+
   });
 </script>
   </body>

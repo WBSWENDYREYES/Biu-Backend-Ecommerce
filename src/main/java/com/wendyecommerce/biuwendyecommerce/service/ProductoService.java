@@ -5,21 +5,22 @@ package com.wendyecommerce.biuwendyecommerce.service;
 
 import com.wendyecommerce.biuwendyecommerce.model.Producto;
 import com.wendyecommerce.biuwendyecommerce.repository.ProductoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
 public class ProductoService {
+    
+@Autowired
+private ProductoRepository productoRepository;
 
-    @Autowired
-    private ProductoRepository productoRepository;
-
-
+   
     // 2. Listar Usuarios
     public List<Producto> listarTodos() {
-        return productoRepository.findAll();
+        return productoRepository.listaProducto();
     }
 
     // 3. Crear o Guardar Usuario
@@ -29,11 +30,11 @@ public class ProductoService {
 
     // 4. Buscar por ID (Auxiliar para actualizar)
     public Optional<Producto> buscarPorId(int id) {
-        return productoRepository.findById(id);
+        return productoRepository.buscarPorId(id);
     }
 
     // 4. Eliminar un producto por su ID
 public void eliminarProducto(int id) {
-    productoRepository.deleteById(id);
+    productoRepository.BorrarPorId(id);
 }
 }

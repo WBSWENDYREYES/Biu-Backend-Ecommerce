@@ -56,9 +56,9 @@
 
                     
                     		<div class="form-floating mb-3">
-							<input class="form-control" id="email"  name="email" type="email"
+							<input class="form-control" id="useremail"  name="useremail" type="email"
 								placeholder="name@example.com"
-								data-sb-validations="required,email" /> <label for="email">Email
+								data-sb-validations="required,email" /> <label for="useremail">Email
 								address</label>
 							<div class="invalid-feedback" data-sb-feedback="email:required">An
 								email is requirido.</div>
@@ -67,9 +67,9 @@
 						</div>
 						
                     		<div class="form-floating mb-3">
-							<input class="form-control" id="password" name="password" type="password"
+							<input class="form-control" id="userpassword" name="userpassword" type="password"
 								placeholder="name@example.com"
-								data-sb-validations="required,password" /> <label for="email">password
+								data-sb-validations="required,password" /> <label for="userpassword">password
 								</label>
 							<div class="invalid-feedback" data-sb-feedback="email:required">Contraseña es
 								requirida.</div>
@@ -101,52 +101,52 @@
     <script>
         $(document).ready(function() {
             // Detecta cuando el usuario hace clic en el botón submit del formulario
-            $('#loginForm').on('submit', function(e) {
+$('#loginForm').on('submit', function(e) {
                 e.preventDefault(); // Detiene el refresco automático de la página
                
                 // Ocultar alertas previas
                 $('#errorAlert').addClass('d-none').text('');
 
                 // Captura los valores de las cajas de texto
-                const txtEmail = $('#email').val();
-                const txtPassword = $('#password').val();
+                const txtEmail = $('#useremail').val();
+                const txtPassword = $('#userpassword').val();
                 // Realiza la llamada asíncrona mediante jQuery AJAX
-                $.ajax({
-                    url: '/api/usuarios/login', // Ruta exacta de tu UsuarioController
-                    type: 'POST',
-                    data: {
-                        email: txtEmail,
-                        password: txtPassword
-                    },
-                    success: function(usuarioLogueado) {
-                        // Si Spring Boot responde exitosamente (Http Status 200 OK)
-                       // alert('¡Bienvenido de vuelta, ' + usuarioLogueado.nombre + '!');
-                        
-                        // Puedes guardarlo en la sesión del navegador si lo deseas
-                        sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
-                        localStorage.setItem('usuarioId', usuarioLogueado.idusuario);
-                        localStorage.setItem('usuarioRol', usuarioLogueado.rol.idroles);
-                        localStorage.setItem('usuarioNombre', usuarioLogueado.nombre);
+console.log("EMAIL:", txtEmail);
+console.log("PASSWORD:", txtPassword);
+console.log("LLAMANDO AL LOGIN");
 
-setTimeout(function() {
-                            const id = usuarioLogueado.idusuario;
-                            const rol = usuarioLogueado.rol.idroles;
-                            const nombre = encodeURIComponent(usuarioLogueado.nombre);
-                          //  alert('¡Bienvenido de vuelta, con rol ' + JSON.stringify(usuarioLogueado) + '!');
+               fetch('/api/usuarios/login', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        email: txtEmail,
+        password: txtPassword
+    })
+})
+.then(response => response.text())
+.then(data => {
+    console.log("RESPUESTA DEL SERVIDOR:", data);
+   localStorage.setItem(
+        "usuario",data );
+  const datosUsuario = localStorage.getItem("usuario");
+   const usuario = JSON.parse(datosUsuario);         
+     localStorage.setItem('usuarioId',usuario.Id);
+     localStorage.setItem('usuarioRol',usuario.idroles);
+     localStorage.setItem('usuarioNombre',usuario.nombre);        
 
-                            // Saltamos al index enviándolos también por la URL como doble respaldo infalible
-                            window.location.href = "index.html?id=" + id + "&rol=" + rol + "&nombre=" + nombre;
-                        }, 200); 
-                      },
-                    error: function(xhr) {
-                        // Si las credenciales fallan (Http Status 401 Unauthorized)
-                        alert(xhr.responseText);
-                        $('#errorAlert').removeClass('d-none').text(xhr.responseText);
-                    }
-                });
-            });
-        });
+
+        window.location.href = '/index.html'; // Redirección a la vista de acceso
+        return;
+})
+.catch(error => {
+    console.error("ERROR:", error);
+    alert(error.message);
+});
+   
+});            });
     </script>
-                   
+
 </body>
 </html>

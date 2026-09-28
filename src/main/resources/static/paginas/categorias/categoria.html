@@ -148,7 +148,7 @@
                     <i class="bi bi-plus-lg me-1" aria-hidden="true"></i>
                     Crear
                   </button>
-                  <button disabled id="btn-editar" type="button" class="btn btn-sm btn-outline-warning">
+                  <button disabled id="btn-editar" type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#categoriaModal">
                     <i class="bi bi-pencil me-1" aria-hidden="true"></i>
                     Editar
                   </button>
@@ -293,24 +293,23 @@
       };
 
       document.addEventListener('DOMContentLoaded', () => {
-
 const modalCategoria = new bootstrap.Modal(document.getElementById('categoriaModal'));
 
 // 1. Evento para tu botón CREAR (Asegúrate de que tu botón tenga id="btn-crear")
 document.getElementById('btn-crear').addEventListener('click', () => {
     document.getElementById('form-categoria').reset(); // Limpia el formulario
-    modalMarca.show(); // Muestra la ventana modal
+    modalCategoria.show(); // Muestra la ventana modal
 });
 
-document.getElementById('btn-edit').addEventListener('click', () => {
-    document.getElementById('form-categoria').reset(); // Limpia el formulario
-    modalMarca.show(); // Muestra la ventana modal
+document.getElementById('btn-editar').addEventListener('click', () => {
+    modalCategoria.show(); // Muestra la ventana modal
 });
 
 // 2. Evento para el botón GUARDAR dentro del modal
 document.getElementById('btn-guardar-categoria').addEventListener('click', () => {
     const nombre = document.getElementById('nombreCategoria').value.trim();
-    
+    const idcategoria = document.getElementById('idCategoria').value.trim();
+   
     if (!nombre) {
         alert("El nombre de la categoría es obligatorio");
         return;
@@ -322,14 +321,14 @@ document.getElementById('btn-guardar-categoria').addEventListener('click', () =>
         return;
     }
     // Enviamos los datos al servidor
-    fetch('/api/categorias', {
+    fetch('/api/categorias/salvarCategoria', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
 
          
-        body: JSON.stringify({ nombre: nombre,
+        body: JSON.stringify({id: idcategoria, nombre: nombre,
             usuarioId: parseInt(usuarioId) })
     })
     .then(response => {
@@ -344,10 +343,12 @@ document.getElementById('btn-guardar-categoria').addEventListener('click', () =>
     })
     .then(data => {
       //  alert("Categoría guardada con éxito!");
-        modalMarca.hide(); // Cerramos la ventana modal
+        modalCategoria.hide(); // Cerramos la ventana modal
         
         // Si tienes una tabla de marcas, aquí la refrescas:
-         cargarDatosMarcas(); 
+       //  alert(JSON.stringify(data, null, 2));
+      
+       cargarDatosCategorias(); // Recargamos la tabla de categorías
 
     })
     .catch(error => {
@@ -426,10 +427,18 @@ const table = new Tabulator('#users-table', {
   ],
 });
 function cargarDatosCategorias() {
-  const URL_API = '/api/categorias'; // Asegúrate de usar el puerto correcto de tu servidor backend
+  const URL_API = '/api/categorias/lista'; // Asegúrate de usar el puerto correcto de tu servidor backend
 
-  fetch(URL_API)
-    .then(response => {
+   fetch(URL_API, {
+  //  LA CORRECCIÓN: El método y las opciones van dentro de las llaves como segundo parámetro
+  method: 'POST', 
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ 
+    usuarioId: parseInt(localStorage.getItem('usuarioId') || '0') 
+  })
+}).then(response => {
       if (!response.ok) {
         throw new Error('Error en la respuesta del servidor');
       }
@@ -468,8 +477,12 @@ table.on("rowSelectionChanged", function(data, rows){
         // 1. Mostramos tu alerta de prueba
         // 2. Activamos el botón Editar
         const btnEditar = document.getElementById('btn-editar');
-         
+         const cnombreCategoria = document.getElementById('nombreCategoria');
+           const cidCategoria = document.getElementById('idCategoria');
+      
         if (btnEditar) {
+            cnombreCategoria.value = datosCategoria.Nombre;
+            cidCategoria.value = datosCategoria.id;
             btnEditar.disabled = false;
         }
 

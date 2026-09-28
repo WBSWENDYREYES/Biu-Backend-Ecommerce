@@ -3,8 +3,8 @@
 
 package com.wendyecommerce.biuwendyecommerce.service;
 
-import com.wendyecommerce.biuwendyecommerce.model.Categoria;
-import com.wendyecommerce.biuwendyecommerce.repository.CategoriaRepository;
+import com.wendyecommerce.biuwendyecommerce.model.Marca;
+import com.wendyecommerce.biuwendyecommerce.repository.MarcaRepository;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,29 +12,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CategoriaService {
+public class MarcaService {
     
 @Autowired
-private CategoriaRepository categoriaRepository;
+private MarcaRepository marcaRepository;
 
    
     // 2. Listar Usuarios
-    public List<Categoria> listarTodos() {
-        return categoriaRepository.listaCategoria();
+    public List<Marca> listarTodos() {
+        return marcaRepository.listaMarca();
     }
 
     // 3. Crear o Guardar Usuario
-    public Categoria guardarCategoria(Categoria categoria) {
-        return categoriaRepository.save(categoria);
+    public Marca guardarMarca(Marca marca) {
+        return marcaRepository.save(marca);
     }
 
     // 4. Buscar por ID (Auxiliar para actualizar)
-    public Optional<Categoria> buscarPorId(int id) {
-        return categoriaRepository.buscarPorId(id);
+    public Optional<Marca> buscarPorId(int id) {
+        return marcaRepository.buscarPorId(id);
     }
 
     // 4. Eliminar un producto por su ID
-public void eliminarCategoria(int id) {
-    categoriaRepository.BorrarPorId(id);
+public void eliminarMarca(int id) {
+    marcaRepository.BorrarPorId(id);
 }
 }

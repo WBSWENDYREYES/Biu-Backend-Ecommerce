@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SOFTWENDY | Data Tables</title>
+
+    <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
+    <script>
+      (() => {
+        'use strict';
+        const root = document.documentElement;
+
+        // Applications with their own theming opt out of AdminLTE's color mode
+        // entirely, here as well as in the bundle.
+        if (root.getAttribute('data-lte-color-mode') === 'off') {
+          return;
+        }
+
+        const STORAGE_KEY = 'lte-theme';
+        let stored = null;
+        try {
+          stored = localStorage.getItem(STORAGE_KEY);
+        } catch {
+          // localStorage may be unavailable (private mode, sandboxed iframe).
+        }
+        // Mirror the precedence in color-mode.ts: the visitor's stored choice
+        // wins, then a theme this page declared itself, then the OS preference.
+        const authored = root.getAttribute('data-bs-theme');
+        let resolved = 'light';
+        if (stored === 'dark' || stored === 'light') {
+          resolved = stored;
+        } else if (authored === 'dark' || authored === 'light') {
+          resolved = authored;
+        } else if (globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
+          resolved = 'dark';
+        }
+        root.setAttribute('data-bs-theme', resolved);
+        root.style.colorScheme = resolved;
+        // Flag values computed here, so the bundle does not mistake them for a
+        // theme the page declared and stop following the OS preference.
+        if (resolved !== authored) {
+          root.setAttribute('data-lte-theme-resolved', '');
+        }
+      })();
+    </script>
+    <!--end::Theme Init-->
+
+    <!--begin::Accessibility Meta Tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <!--end::Accessibility Meta Tags-->
+
+    <!--begin::Primary Meta Tags-->
+    <meta name="title" content="SOFTWENDY | Data Tables" />
+    <meta name="author" content="ColorlibHQ" />
+    <meta
+      name="description"
+      content="AdminLTE is a free Bootstrap 5 admin dashboard template with almost 50 example pages, built with vanilla JS and designed with accessibility in mind."
+    />
+    <meta
+      name="keywords"
+      content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel"
+    />
+    <!--end::Primary Meta Tags-->
+
+    <!--begin::Accessibility Features-->
+    <!-- Skip links will be dynamically added by accessibility.js -->
+    <meta name="supported-color-schemes" content="light dark" />
+    <link rel="preload" href="../css/adminlte.css" as="style" />
+    <!--end::Accessibility Features-->
+
+    <!--begin::Fonts-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
+      integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q="
+      crossorigin="anonymous"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <!--end::Fonts-->
+
+    <!--begin::Third Party Plugin(OverlayScrollbars)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(OverlayScrollbars)-->
+
+    <!--begin::Third Party Plugin(Bootstrap Icons)-->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      crossorigin="anonymous"
+    />
+    <!--end::Third Party Plugin(Bootstrap Icons)-->
+
+    <!--begin::Required Plugin(AdminLTE)-->
+    <link rel="stylesheet" href="/css/adminlte.css" />
+    <!--end::Required Plugin(AdminLTE)-->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.4.0/dist/css/tabulator_bootstrap5.min.css"
+      crossorigin="anonymous"
+    />
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0" id="formTitle">Formulario de Registro de Usuario</h4>
+        </div>
+        <div class="card-body">
+            <!-- Formulario -->
+            <form id="productForm" class="needs-validation" novalidate>
+                
+                <!-- ID Oculto para el Modo Actualización -->
+                <input type="hidden" id="Idusuario" name="Idusuario" value="0">
+
+                <div class="row g-3">
+                    <!-- Nombre -->
+                    <div class="col-md-6">
+                        <label for="nombreUsuario" class="form-label">Nombre </label>
+                        <input type="text" class="form-control" id="nombreUsuario" placeholder="Ej: Wendy Reyes" required>
+                        <div class="invalid-feedback">Por favor, ingrese el nombre del usuario.</div>
+                    </div>
+
+                    <!-- Telefonos -->
+                    <div class="col-md-6">
+                        <label for="telefonosUsuario" class="form-label">Teléfonos</label>
+                        <input type="text" class="form-control" id="telefonosUsuario" >
+                    </div>
+
+                                     <!-- email -->
+                    <div class="col-md-6">
+                        <label for="emailUsuario" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="emailUsuario" >
+                    </div>
+                    
+                    <!-- Precio -->
+                    <div class="col-md-6">
+                   <label for="idroles" class="form-label">Rol del Usuario</label>
+  <select class="form-select" id="idroles" name="idroles" required>
+    <!-- Opción por defecto (deshabilitada para obligar a elegir) -->
+    <option value="0" selected disabled>Selecciona un rol...</option>
+    
+    <!-- Opciones del menú desplegable -->
+    <option value="1">Administrador</option>
+    <option value="2">Cliente</option>
+    <option value="3">Soporte Técnico</option>
+  </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="passwordUsuario" class="form-label">Clave</label>
+                        <input type="password" class="form-control" id="passwordUsuario" required >
+                    </div>
+                               <div class="col-md-6">
+                        <label for="passwordUsuario1" class="form-label">Confirmar Clave</label>
+                        <input type="password" class="form-control" id="passwordUsuario1" required >
+                    </div>  
+         <!-- Botones de Acción -->
+                <div class="mt-4 d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" onclick="limpiarFormulario()">Limpiar</button>
+                    <button type="button" name="btn-guardar-usuario" id="btn-guardar-usuario" class="btn btn-success">Guardar Usuario</button>
+                </div>
+     
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 Bundle with Popper -->
+<script src="https://jsdelivr.net"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+ const usuarioId = localStorage.getItem('usuarioId'); 
+    if (!usuarioId) {
+        alert("Error: No se encontró una sesión activa de usuario.");
+        window.location.href = '/login.html';
+        return;
+    }
+
+    // 1. Controlar el entorno del iframe antes de iniciar
+//inicializarFormulario();
+    // 2. Cargar los selectores de inmediato (En paralelo)
+document.getElementById('btn-guardar-usuario').addEventListener('click', () => {
+  const idusuario = document.getElementById('Idusuario').value.trim();
+  const nombre = document.getElementById('nombreUsuario').value.trim();
+  const telefonos = document.getElementById('telefonosUsuario').value.trim();
+  const email = document.getElementById('emailUsuario').value.trim();
+  const idroles = document.getElementById('idroles').value.trim();
+  const password = document.getElementById('passwordUsuario').value.trim();
+  const password1 = document.getElementById('passwordUsuario1').value.trim();
+ 
+    if (!nombre) {
+        alert("El nombre del usuario es obligatorio");
+        return;
+    }
+        if (!email) {
+        alert("El email del usuario es obligatorio");
+        return;
+    }
+    if (password != password1)
+    {
+      alert("Tiene que confirmar la Clave . . .");
+      return;
+    }
+    const usuarioId = localStorage.getItem('usuarioRol');
+    
+    //alert(usuarioId+ " "+nombre+ " "+telefonos+email+" "+password+" "+idroles);
+    if (!usuarioId) {
+        alert("Error: No se encontró una sesión activa de usuario.");
+        window.location.href = '/login.html';
+        return;
+    }
+    // Enviamos los datos al servidor
+    fetch('/api/usuarios/SalvarUsuario', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id : parseInt(idusuario), nombre: nombre,
+            telefonos: telefonos,
+            email: email,
+            password: password,Rol : parseInt(idroles),
+            usuarioId: parseInt(usuarioId) })
+    })
+    .then(response => {
+        //  SI EL SERVIDOR DEVUELVE 403 (FORBIDDEN), SIGNIFICA QUE NO ES ADMIN
+        if (response.status === 403) {
+            throw new Error("Acceso denegado: Solo los administradores pueden crear Categorias.");
+        }
+        if (!response.ok) {
+            throw new Error("Hubo un error al guardar la categoría."+response.message);
+        }
+        return response.json();
+    })
+    .then(data => {
+      //  alert("Categoría guardada con éxito!");
+        
+        // Si tienes una tabla de marcas, aquí la refrescas:
+     //    cargarDatosUsuarios(); 
+
+    })
+    .catch(error => {
+        // Aquí atrapamos el error 403 y se lo mostramos al usuario
+        alert(error.message);
+    });
+});
+
+
+});
+
+</script>
+</body>
+</html>

@@ -1,33 +1,24 @@
-package com.wendyecommerce.biuwendyecommerce.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Marca")
+package com.wendyecommerce.biuwendyecommerce.model;
+
 public class Marca {
-   @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
 
+    // Constructor vacío
     public Marca() {}
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    // Constructor completo
+    public Marca(int id, String nombre) {
         this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
         this.nombre = nombre;
+       
     }
+
+    // Getters y Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }

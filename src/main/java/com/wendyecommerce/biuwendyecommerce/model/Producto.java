@@ -1,37 +1,25 @@
 package com.wendyecommerce.biuwendyecommerce.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Producto")
 public class Producto {
- @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
     private String referencia;
     private String nombre;
     private String descripcion;
     private double precio;
     private int existencia;
-@ManyToOne
-    @JoinColumn(name = "idCategoria", referencedColumnName = "id")
-    private Categoria categoria;
-@ManyToOne
-    @JoinColumn(name = "idMarca", referencedColumnName = "id")
-    private Marca marca;
-    // Constructor
+    private int idCategoria;
+    private int idMarca;
+    private String imagen;
+    private String nombreCategoria;
+    private String nombreMarca;
+  // Constructor
   public Producto() {}
     // Métodos (Propiedades)
-    public int getidproducto () {
+    public int getid () {
         return id;
     }
-    public void setidproducto (int idproducto) {
-        this.id = idproducto;
+    public void setid (int id) {
+        this.id = id;
     }
     public String getReferencia() {
         return referencia;
@@ -62,18 +50,62 @@ public class Producto {
     public int getExistencia() {
         return existencia;
     }
+
     public void setExistencia(int existencia) {
         this.existencia = existencia;
     }
-    public Categoria getCategoria() { return categoria; }
-    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
 
-    public Marca getMarca() { return marca; }
-    public void setMarca(Marca marca) { this.marca = marca; }
+ public int getidCategoria() {
+        return idCategoria;
+    }
     
-    public String getDetalles() {
-        return "Producto: " + descripcion + " - Precio: " + precio;
+    public void setidCategoria(int idcategoria) {
+        this.idCategoria = idcategoria;
+    
+}
+
+ public int getidMarca() {
+        return idMarca;
+    }
+    
+    public void setidMarca(int idmarca) {
+        this.idMarca = idmarca;
+    
+}
+ public String getImagen() {
+        return imagen;
+    }
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    
+ public String getnombreCategoria() {
+        return nombreCategoria;
+    }
+    public void setnombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }    
+
+ public String getnombreMarca() {
+        return nombreMarca;
+    }
+    public void setnombreMarca(String nombreMarca) {
+        this.nombreMarca = nombreMarca;
+    }    
+
+ @Override
+public String toString() {
+    return "Producto{" +
+            "id=" + id +
+            ", nombre='" + nombre + '\'' +
+            ", referencia='" + referencia + '\'' +
+            ", descripcion='" + descripcion + '\'' +
+            ", existencia=" + existencia +
+            ", precio=" + precio +
+            ", idCategoria=" + idCategoria +
+            ", idMarca=" + idMarca +
+            ", imagen='" + imagen + '\'' +
+            '}';
+}   
+
 }

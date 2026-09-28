@@ -5,16 +5,17 @@ package com.wendyecommerce.biuwendyecommerce.service;
 
 import com.wendyecommerce.biuwendyecommerce.model.Usuario;
 import com.wendyecommerce.biuwendyecommerce.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
 public class UsuarioService {
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    
+@Autowired
+private UsuarioRepository usuarioRepository;
 
     // 1. Validar Login
     public Optional<Usuario> iniciarSesion(String email, String password) {

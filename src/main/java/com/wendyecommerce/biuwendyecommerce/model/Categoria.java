@@ -1,36 +1,24 @@
+
 package com.wendyecommerce.biuwendyecommerce.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "Categoria")
 public class Categoria {
-    // Atributos
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
-        private String nombre;
+    private int id;
+    private String nombre;
 
-                
-        //  Constructor
-        public Categoria() {}
-        
-        public int getid() {
-            return id;
-        }
+    // Constructor vacío
+    public Categoria() {}
 
-        public void setid(int id) {
-            this.id = id;
-        }
+    // Constructor completo
+    public Categoria(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+       
+    }
 
-        public String getnombre() {
-            return nombre;
-        }
+    // Getters y Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-        public void setnombre(String nombre) {
-            this.nombre = nombre;
-        }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 }
