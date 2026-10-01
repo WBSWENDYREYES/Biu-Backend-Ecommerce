@@ -4,6 +4,8 @@
 package com.wendyecommerce.biuwendyecommerce.service;
 
 import com.wendyecommerce.biuwendyecommerce.model.Producto;
+import com.wendyecommerce.biuwendyecommerce.model.ProductoDigital;
+import com.wendyecommerce.biuwendyecommerce.model.ProductoFisico;
 import com.wendyecommerce.biuwendyecommerce.repository.ProductoRepository;
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +26,12 @@ private ProductoRepository productoRepository;
     }
 
     // 3. Crear o Guardar Usuario
-    public Producto guardarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    public Producto guardarProductoDigital(ProductoDigital producto) {
+        return productoRepository.saveProductoDigital(producto);
     }
-
+    public Producto guardarProductoFisico(ProductoFisico producto) {
+        return productoRepository.saveProductoFisico(producto);
+    }
     // 4. Buscar por ID (Auxiliar para actualizar)
     public Optional<Producto> buscarPorId(int id) {
         return productoRepository.buscarPorId(id);

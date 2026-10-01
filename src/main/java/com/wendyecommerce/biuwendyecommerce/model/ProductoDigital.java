@@ -22,5 +22,8 @@ public class ProductoDigital extends Producto {
     public void setTamanoArchivo(double tamanoArchivo) {
         this.tamanoArchivo = tamanoArchivo;
     }
-
+@Override    
+public String mostrarDetalle() {
+        return "Producto Digital: " + nombre + " | Ref: " + referencia + " | Descripción: " + descripcion + " | Precio: $" + precio;
+}
 }

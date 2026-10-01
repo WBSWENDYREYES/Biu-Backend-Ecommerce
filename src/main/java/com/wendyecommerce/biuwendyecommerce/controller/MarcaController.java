@@ -50,8 +50,8 @@ public ResponseEntity<?> SalvarCategoria(@RequestBody Map<String, Object> reques
 
      int id = 0;
 
-if (request.get("id") != null) {
-    id = Integer.parseInt(request.get("id").toString());
+if (request.get("id") != null && !request.get("id").toString().trim().isEmpty()) {
+    id = Integer.parseInt(request.get("id").toString().trim());
 }
          Marca marca = new Marca();
                  marca.setId(id);

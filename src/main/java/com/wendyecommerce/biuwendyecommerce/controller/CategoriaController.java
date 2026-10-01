@@ -49,10 +49,10 @@ public ResponseEntity<?> SalvarCategoria(@RequestBody Map<String, Object> reques
      String nombre = ((String) request.get("nombre")).toString();
 
      int id = 0;
-
-if (request.get("id") != null) {
-    id = Integer.parseInt(request.get("id").toString());
+if (request.get("id") != null && !request.get("id").toString().trim().isEmpty()) {
+    id = Integer.parseInt(request.get("id").toString().trim());
 }
+
          Categoria categoria = new Categoria();
                  categoria.setId(id);
                  categoria.setNombre(nombre.trim());
@@ -61,6 +61,35 @@ if (request.get("id") != null) {
     } catch (Exception e) {
 
         System.err.println("ERROR EN LOGIN: " + e.getMessage());
+        e.printStackTrace();
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error al consultar la base de datos");
+    }
+}
+// eliminar por Id
+
+@PostMapping("/eliminarCategoria")
+public ResponseEntity<?> EliminarCategoria(@RequestBody Map<String, Object> request) {
+    
+  System.err.println("Entro a Eliminar Categoria ");
+    
+   
+  try {
+  //   String nombre = ((String) request.get("nombre")).toString();
+
+     int id = 0;
+if (request.get("id") != null && !request.get("id").toString().trim().isEmpty()) {
+    id = Integer.parseInt(request.get("id").toString().trim());
+}
+     categoriaService.eliminarCategoria(id);
+      return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("CATEGORIA ELIMINADA . . .");
+    } catch (Exception e) {
+
+        System.err.println("ERROR AL ELIMINAR CATEGORIA: " + e.getMessage());
         e.printStackTrace();
 
         return ResponseEntity

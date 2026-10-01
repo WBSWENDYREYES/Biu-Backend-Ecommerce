@@ -12,6 +12,7 @@ public class Producto {
     private String imagen;
     private String nombreCategoria;
     private String nombreMarca;
+    private int idtipoproducto;
   // Constructor
   public Producto() {}
     // Métodos (Propiedades)
@@ -92,7 +93,14 @@ public class Producto {
     public void setnombreMarca(String nombreMarca) {
         this.nombreMarca = nombreMarca;
     }    
-
+public int getidTipoproducto() {
+        return idtipoproducto;
+    }
+    
+public void setidtipoProducto(int idtipoProducto) {
+        this.idtipoproducto = idtipoProducto;
+    
+}
  @Override
 public String toString() {
     return "Producto{" +
@@ -107,5 +115,10 @@ public String toString() {
             ", imagen='" + imagen + '\'' +
             '}';
 }   
+
+public String obtenerDetallesEntrega() {
+    
+    return "Entrega estándar del producto.";
+}
 
 }

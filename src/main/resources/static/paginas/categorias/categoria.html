@@ -164,6 +164,12 @@
                     <i class="bi bi-printer me-1" aria-hidden="true"></i>
                     Print
                   </button>
+
+                   <button  type="button" id="btn-eliminar" disabled class="btn btn-sm btn-outline-warning">
+                    <i class="bi bi-trash  me-1" aria-hidden="true"></i>
+                    Eliminar
+                  </button>
+
                 </div>
                 <div id="users-table"></div>
               </div>
@@ -357,6 +363,62 @@ document.getElementById('btn-guardar-categoria').addEventListener('click', () =>
     });
 });
 
+document.getElementById('btn-eliminar').addEventListener('click', () => {
+    const idcategoria = document.getElementById('idCategoria').value.trim();
+   
+    if (!idcategoria) {
+        alert("Tienes que Seleccionar la categoría a Aliminar");
+        return;
+    }
+    let repuesta = confirm("Seguro que Deseas eliminar esta Categoria?");
+    if (!repuesta){return;}  
+
+
+    const usuarioId = localStorage.getItem('usuarioId'); 
+    if (!usuarioId) {
+        alert("Error: No se encontró una sesión activa de usuario.");
+        window.location.href = '/login.html';
+        return;
+    }
+    // Enviamos los datos al servidor
+    fetch('/api/categorias/eliminarCategoria', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id: idcategoria,
+            usuarioId: parseInt(usuarioId) })
+    })
+    .then(response => {
+        //  SI EL SERVIDOR DEVUELVE 403 (FORBIDDEN), SIGNIFICA QUE NO ES ADMIN
+        if (response.status === 403) {
+            throw new Error("Acceso denegado: Solo los administradores pueden crear Categorias.");
+        }
+        if (!response.ok) {
+            throw new Error("Hubo un error al guardar la categoría.");
+        }
+        return response.json();
+    })
+    .then(data => {
+      //  alert("Categoría guardada con éxito!");
+        modalCategoria.hide(); // Cerramos la ventana modal
+        // Si tienes una tabla de marcas, aquí la refrescas:
+       //  alert(JSON.stringify(data, null, 2));
+       cargarDatosCategorias(); // Recargamos la tabla de categorías
+
+    })
+    .catch(error => {
+        // Aquí atrapamos el error 403 y se lo mostramos al usuario
+       // alert(error.message);
+
+    modalCategoria.hide(); // Cerramos la ventana modal
+        // Si tienes una tabla de marcas, aquí la refrescas:
+       //  alert(JSON.stringify(data, null, 2));
+       cargarDatosCategorias(); // Recargamos la tabla de categorías
+
+
+    });
+});
 
         let data = [];
 const table = new Tabulator('#users-table', {
@@ -470,29 +532,31 @@ table.on("rowSelectionChanged", function(data, rows){
     table.redraw(true); // Redibuja los cuadritos ☑ y ☐
 
     // Si hay una fila seleccionada (rows contiene elementos)
-    if (rows.length > 0) {
+     const btnEditar = document.getElementById('btn-editar');
+        const btneliminar = document.getElementById('btn-eliminar');
+      if (rows.length > 0) {
         const filaActiva = rows[0]; // Como es selección única, tomamos la primera
         const datosCategoria = filaActiva.getData();
 
         // 1. Mostramos tu alerta de prueba
         // 2. Activamos el botón Editar
-        const btnEditar = document.getElementById('btn-editar');
-         const cnombreCategoria = document.getElementById('nombreCategoria');
+          const cnombreCategoria = document.getElementById('nombreCategoria');
            const cidCategoria = document.getElementById('idCategoria');
       
         if (btnEditar) {
             cnombreCategoria.value = datosCategoria.Nombre;
             cidCategoria.value = datosCategoria.id;
             btnEditar.disabled = false;
+            btneliminar.disabled = false;
         }
 
         
 
     } else {
         // Si no hay nada seleccionado, volvemos a apagar el botón
-        const btnEditar = document.getElementById('btn-editar');
         if (btnEditar) {
-            btnEditar.disabled = true;
+               btneliminar.disabled = true;
+         btnEditar.disabled = true;
         }
     }
 });

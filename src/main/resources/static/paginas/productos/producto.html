@@ -193,7 +193,7 @@
     </div>
 
   <div class="modal fade bi-plus-lg" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
  <div class="modal-content">
       <div class="modal-header bg-primary text-white">
                <h4 class="mb-0" id="formTitle">Formulario de Registro de Productos</h4>
@@ -209,19 +209,29 @@
                 <!-- ID Oculto para el Modo Actualización -->
 
                 <div class="row g-3">
+             
                            <!-- productId -->
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <label for="productId" class="form-label">Id Producto</label>
                         <input type="text" class="form-control" name="productoid" id="productoid" disabled>
                     </div>
+ <!-- Tipo de Productos -->
 
+                           <div class="col-md-3">
+                        <label for="tipoproducto" class="form-label">Tipo Producto</label>
+                        <select class="form-select" id="tipoproducto" required>
+                        <option value="" selected disabled>Seleccione un Tipo...</option>
+                                <option value="1" selected >PRODUCTO DIGITAL</option>
+                             <option value="2" selected >PRODUCTO FISICO</option>
+                           <!-- Los datos se inyectarán dinámicamente con JavaScript -->
+                        </select>
+                    </div>      
                     <!-- Referencia -->
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="referencia" class="form-label">Referencia / Código</label>
                         <input type="text" class="form-control" id="referencia" placeholder="Ej: REF-1029" required>
                         <div class="invalid-feedback">Por favor, ingrese la referencia del producto.</div>
                     </div>
-
                     <!-- Nombre -->
                     <div class="col-md-6">
                         <label for="nombre" class="form-label">Nombre del Producto</label>
@@ -230,7 +240,7 @@
                     </div>
 
                     <!-- Precio -->
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <label for="precio" class="form-label">Precio</label>
                         <div class="input-group">
                             <span class="input-group-text">$</span>
@@ -240,8 +250,8 @@
                     </div>
 
                     <!-- Existencia (Stock) -->
-                    <div class="col-md-6">
-                        <label for="existencia" class="form-label">Existencia / Stock disponible</label>
+                    <div class="col-md-2">
+                        <label for="existencia" class="form-label">Existencia disponible</label>
                         <input type="number" min="0" class="form-control" id="existencia" placeholder="Ej: 50" required>
                     </div>
                    
@@ -271,13 +281,51 @@
                         <input type="text" class="form-control" id="imagen" >
                     </div>
 
-                    <!-- Descripción -->
+                <!-- ========================================== -->
+                <!-- CAMPOS ADICIONALES PARA PRODUCTO DIGITAL   -->
+                <!-- ========================================== -->
+                <div id="campos-digital" class="col-12 d-none">
+                  <div class="col-12"><hr><h5 class="text-info">Especificaciones Digitales</h5></div>
+                  <div class="col-md-6">
+                    <label for="formatoArchivo" class="form-label">Formato de Archivo</label>
+                    <input type="text" class="form-control" id="formatoArchivo" placeholder="Ej: PDF, ZIP, EXE">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="tamanoArchivo" class="form-label">Tamaño del Archivo (MB)</label>
+                    <input type="number" step="0.01" class="form-control" id="tamanoArchivo" placeholder="Ej: 15.4">
+                  </div>
+                </div>
+
+                  
+<!-- ========================================== -->
+                <!-- CAMPOS ADICIONALES PARA PRODUCTO FISICO    -->
+                <!-- ========================================== -->
+                <div id="campos-fisico" class="col-12 d-none">
+                  <div class="col-12"><hr><h5 class="text-warning">Especificaciones Físicas (Logística)</h5></div>
+                  <div class="col-md-3">
+                    <label for="peso" class="form-label">Peso (kg)</label>
+                    <input type="number" step="0.01" class="form-control" id="peso" placeholder="0.00">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="alto" class="form-label">Alto (cm)</label>
+                    <input type="number" step="0.01" class="form-control" id="alto" placeholder="0.00">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="ancho" class="form-label">Ancho (cm)</label>
+                    <input type="number" step="0.01" class="form-control" id="ancho" placeholder="0.00">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="profundidad" class="form-label">Profundidad (cm)</label>
+                    <input type="number" step="0.01" class="form-control" id="profundidad" placeholder="0.00">
+                  </div>
+                </div>
+
+                  <!-- Descripción -->
                     <div class="col-12">
                         <label for="descripcion" class="form-label">Descripción Detallada</label>
                         <textarea class="form-control" id="descripcion" rows="3" placeholder="Escriba aquí los detalles del producto..." required></textarea>
                         <div class="invalid-feedback">Por favor, ingrese una descripción.</div>
                     </div>
-
        
                 </div>
 
@@ -366,6 +414,43 @@
       };
 
       document.addEventListener('DOMContentLoaded', () => {
+
+ document.getElementById('tipoproducto').addEventListener('change', function() {
+    const tipo = this.value;
+    const camposDigital = document.getElementById('campos-digital');
+    const camposFisico = document.getElementById('campos-fisico');
+
+    // Inicialmente ocultamos ambos bloques
+    camposDigital.classList.add('d-none');
+    camposFisico.classList.add('d-none');
+
+    // Quitamos la obligatoriedad para que no falle la validación general si están ocultos
+    alternarRequeridos(camposDigital, false);
+    alternarRequeridos(camposFisico, false);
+
+    // Mostramos el bloque seleccionado y activamos sus campos obligatorios
+    if (tipo === '1') {
+      camposDigital.classList.remove('d-none');
+      alternarRequeridos(camposDigital, true);
+    } else if (tipo === '2') {
+      camposFisico.classList.remove('d-none');
+      alternarRequeridos(camposFisico, true);
+    }
+  });
+
+  // Función auxiliar para poner o quitar el atributo 'required' dinámicamente
+  function alternarRequeridos(contenedor, contenedorActivo) {
+    const inputs = contenedor.querySelectorAll('input');
+    inputs.forEach(input => {
+      if (contenedorActivo) {
+        input.setAttribute('required', 'true');
+      } else {
+        input.removeAttribute('required');
+        input.value = ''; // Limpia el valor si se cambia de tipo
+      }
+    });
+  }
+
 // CARGAR MARCA 
 async function cargarMarcas() {
     const selectMarca = document.getElementById("marca");
@@ -471,6 +556,15 @@ document.getElementById('btn-guardar-producto').addEventListener('click', () => 
     const referencia = document.getElementById('referencia').value.trim();
     const descrip = document.getElementById('descripcion').value.trim();
     const imagen = document.getElementById('imagen').value.trim();
+
+       const formatoArchivo = document.getElementById('formatoArchivo').value.trim();
+       const tamanoArchivo = document.getElementById('tamanoArchivo').value.trim();
+       const peso = document.getElementById('peso').value.trim();
+       const alto = document.getElementById('alto').value.trim();
+       const ancho = document.getElementById('ancho').value.trim();
+       const profundidad = document.getElementById('profundidad').value.trim();
+       const tipoproducto = document.getElementById('tipoproducto').value.trim();
+
  //alert(categoria);
  //alert(marca);
     if (!nombre) {
@@ -496,7 +590,7 @@ document.getElementById('btn-guardar-producto').addEventListener('click', () => 
         window.location.href = '/login.html';
         return;
     }
-    // Enviamos los datos al servidor
+      // Enviamos los datos al servidor
     fetch('/api/productos/salvarProducto', {
         method: 'POST',
         headers: {
@@ -505,7 +599,10 @@ document.getElementById('btn-guardar-producto').addEventListener('click', () => 
 
         body: JSON.stringify({id: productoid, nombre: nombre,referencia : referencia,
             existencia: existencia, precio : precio,descripcion : descrip,
-            imagen : imagen, idcategoria : categoria, idmarca : marca,  
+            imagen : imagen, idcategoria : categoria, idmarca : marca,
+            formatoarchivo : formatoArchivo, tamanoarchivo : tamanoArchivo, 
+            peso : peso, alto : alto, ancho : ancho, profundidad : profundidad,
+            tipoproducto : tipoproducto,  
             usuarioId: parseInt(usuarioId) })
     })
     .then(response => {
