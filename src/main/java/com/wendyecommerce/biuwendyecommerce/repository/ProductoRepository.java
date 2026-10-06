@@ -226,8 +226,8 @@ public Producto saveProductoDigital(ProductoDigital producto) {
         return producto;
     }
 
-public Producto saveProductoFisProducto(ProductoFisico producto) {
-
+public Producto saveProductoFisico(ProductoFisico producto) {
+         
         if (producto.getid() > 0) {
           System.err.println(producto);
     // Si el ID ya existe, ejecutamos un UPDATE

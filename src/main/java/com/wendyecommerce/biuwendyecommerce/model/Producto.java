@@ -12,7 +12,7 @@ public class Producto {
     private String imagen;
     private String nombreCategoria;
     private String nombreMarca;
-    private int idtipoproducto;
+    private int tipoproducto;
   // Constructor
   public Producto() {}
     // Métodos (Propiedades)
@@ -93,12 +93,12 @@ public class Producto {
     public void setnombreMarca(String nombreMarca) {
         this.nombreMarca = nombreMarca;
     }    
-public int getidTipoproducto() {
-        return idtipoproducto;
+public int getTipoproducto() {
+        return tipoproducto;
     }
     
-public void setidtipoProducto(int idtipoProducto) {
-        this.idtipoproducto = idtipoProducto;
+public void settipoProducto(int tipoProducto) {
+        this.tipoproducto = tipoProducto;
     
 }
  @Override
@@ -119,6 +119,10 @@ public String toString() {
 public String obtenerDetallesEntrega() {
     
     return "Entrega estándar del producto.";
+}
+// muestra los detalles del producto, incluyendo nombre, referencia y precio
+public String mostrarDetalle() {
+        return "Producto General: " + nombre + " | Ref: " + referencia + " | Descripción: " + descripcion + " | Precio: $" + precio;
 }
 
 }

@@ -22,8 +22,12 @@ public class ProductoDigital extends Producto {
     public void setTamanoArchivo(double tamanoArchivo) {
         this.tamanoArchivo = tamanoArchivo;
     }
-@Override    
-public String mostrarDetalle() {
-        return "Producto Digital: " + nombre + " | Ref: " + referencia + " | Descripción: " + descripcion + " | Precio: $" + precio;
-}
+// AQUI MOSTRAMOS EN EL EJEMPLO DE LA SOBRE ESCRITURA DEL METODO DE LA CLASE PADRE, PARA MOSTRAR LOS DETALLES DEL PRODUCTO DIGITAL
+    @Override
+    public String mostrarDetalle() {
+        return "Producto Digital: " + getNombre() + " | Ref: " + getReferencia() + " | Descripción: " + getDescripcion() + " | Precio: $" + getPrecio() +
+                " | Formato de Archivo: " + formatoArchivo + " | Tamaño de Archivo: " + tamanoArchivo + " MB";
+    }
+    
+
 }

@@ -83,7 +83,6 @@ if (request.get("precio") != null && !request.get("precio").toString().trim().is
 if (request.get("tipoproducto") != null && !request.get("tipoproducto").toString().trim().isEmpty()) {
     tipoproducto = Integer.parseInt(request.get("tipoproducto").toString().trim());
 }
-
 System.err.println("get precio ");
     //Producto Digital
  if (tipoproducto==1 ){

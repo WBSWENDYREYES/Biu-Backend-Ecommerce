@@ -35,8 +35,16 @@ public class Usuario {
     public void setEmail(String email) { this.email = email; }
 
     public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
+    public void setPassword(String password) { 
+        if (password != null && password.length() >= 8) {
+            this.password = password;
+        } else {
+            System.out.println("Error: La contraseña debe tener al menos 8 caracteres.");
+        }
+    }
     public int getIdroles() { return idroles; }
     public void setIdroles(int idroles) { this.idroles = idroles; }
+
+
+
 }
